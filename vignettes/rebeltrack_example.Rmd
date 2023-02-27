@@ -1,0 +1,67 @@
+---
+title: "Rebeltrack Example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Rebeltrack Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Load packages
+
+```{r load-packages, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(rebeltrack)
+```
+
+### Load Dataset
+
+```{r load-dataset, eval=TRUE}
+dataset <- rebeltrack_load_dataset(type = UCDP_STATE_BASED, region = "Africa")
+```
+
+### Create RebelTrack DataFrame 
+
+```{r create-dataframe, eval=TRUE}
+data <- rebeltrack_dataframe(dataset,
+                             side = SIDE_B,
+                             period = "month",
+                             balanced = TRUE)
+data
+```
+
+### Generate Variables
+
+#### Using %>% Pipes
+
+```{r generate-vars-1, eval=TRUE}
+data <- data %>% 
+  rebeltrack_event_count(event_count) %>% 
+  rebeltrack_days_affected(days_affected) %>% 
+  rebeltrack_casualty_count(SIDE_A, casualties_A) %>% 
+  rebeltrack_casualty_count(SIDE_B, casualties_B)
+  
+data
+```
+
+
+#### Without %>% Pipes
+
+```{r generate-vars-2, eval=TRUE}
+data <- rebeltrack_dataframe(dataset,
+                             side = SIDE_B,
+                             period = "month",
+                             balanced = TRUE)
+
+data <- rebeltrack_event_count(data, event_count) 
+data <- rebeltrack_days_affected(data, days_affected)
+data <- rebeltrack_casualty_count(data, SIDE_A, casualties_A) 
+data <- rebeltrack_casualty_count(data, SIDE_B, casualties_B) 
+
+data
+```
+

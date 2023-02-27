@@ -1,0 +1,27 @@
+path: ~/.rebeltrack
+datasets:
+  ucdp:
+    ged:
+      url: http://ucdp.uu.se/downloads/ged/ged181-RData.zip
+    dyadic:
+      url: http://ucdp.uu.se/downloads/dyadic/ucdp-dyadic-181.RData.zip
+    termination-conflict:
+      url: http://ucdp.uu.se/downloads/monadterm/ucdp-term-conf-2015.xlsx
+    termination-dyadic:
+      url: http://ucdp.uu.se/downloads/monadterm/ucdp-term-dyadic-2015.xlsx
+    translation-conflict:
+      url: http://ucdp.uu.se/downloads/actor/translate_conf.csv
+    translation-dyadic:
+      url: http://ucdp.uu.se/downloads/actor/translate_dyad.csv
+    translation-actors:
+      url: http://ucdp.uu.se/downloads/actor/translate_actor.csv
+    actors:
+      url: http://ucdp.uu.se/downloads/actor/actorlist.csv
+  prio:
+    grid:
+      url: http://grid.prio.org/api/csv/yearlies
+      basename: grid.csv
+      query:
+        startYear: 1989
+        endYear: 2014
+        variables: bdist1,bdist2,capdist

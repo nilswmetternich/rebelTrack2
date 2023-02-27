@@ -1,0 +1,231 @@
+\documentclass{beamer}
+%\usetheme{Madrid}
+%\usetheme{Berlin}
+%\usepackage{german}
+%\usepackage[latin1]{inputenc}
+%\usepackage[T1]{fontenc}
+%\mode<presentation>
+ %{
+ \usetheme{Madrid}
+ \setbeamercolor*{palette primary}{use=structure,fg=black,bg=p7408C}
+ \setbeamercolor*{palette secondary}{use=structure,fg=black,bg=p7406U}
+ \setbeamercolor*{palette tertiary}{use=structure,fg=black,bg=p716C}
+ %}
+ 
+ \definecolor{p7408C}{HTML}{F6BE00}
+  \definecolor{p7406U}{HTML}{FCB315}
+ \definecolor{pyelloy}{HTML}{F6C100}
+ \definecolor{p716C}{HTML}{F17C0E}
+ 
+  \definecolor{p8C}{HTML}{A19589}
+ \setbeamercolor{itemize item}{fg=p8C} % all frames will have red bullets
+ \setbeamertemplate{itemize item}[triangle]
+ \setbeamertemplate{itemize subitem}{\color{p7408C}$\blacktriangleright$}
+
+\setbeamercolor{block title}{bg=p7408C,fg=black}
+
+\usepackage{etex}
+\usepackage{tikz,pgfplots}
+\usepackage{picture}
+
+%\usepackage{german}
+%\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{changebar}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage[T1]{fontenc}
+\usepackage[ansinew]{inputenc}
+\usepackage{setspace}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{dcolumn}
+\usepackage{color}
+\usepackage{colortbl}
+\definecolor{lightgray}{gray}{0.8}
+\definecolor{lightblue}{rgb}{0.8,0.8,0.8}
+\usepackage{hyperref}
+\usepackage{xcolor} 
+\usepackage{array} 
+\usepackage{subfig}
+\usepackage{makecell}
+\usetikzlibrary{arrows,positioning} 
+
+
+\graphicspath{{/Users/jupiter/Dropbox/elements/coala/graphs/}{../../../../Dropbox/elements/spatialrebels/graphs/}{../../../../Dropbox/elements/spatialrebels/graphspres/}}
+
+
+
+\begin{document}
+
+\title[UCL]
+{
+Cross-Validating Binary-Time-Series-Cross-Section Data}
+\author[PSA PolMeth]
+{
+Gokhan Ciflikli \& Nils W. Metternich   \\[3ex]
+\footnotesize{\emph{COnflict Analysis LAb (COALA)}}\\
+\textbf{Funded by the Economic and Social Research Council (UK)}}
+\institute[]
+{		Department of International Relations\\
+		London School of Economics and Political Science\\
+		g.ciflikli@lse.ac.uk \\[4ex]
+		
+		Department of Political Science\\
+		University College London\\
+		n.metternich@ucl.ac.uk\\[4ex]
+		
+		}
+
+\date{\today}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{Cross-validation}
+\begin{itemize} 
+\item Model validation technique to generalize to an independent data set
+\item Done by partitioning datasets into training and test sets.
+\end{itemize}
+\begin{itemize}
+\item Good cross-validation strategies are important for:
+\begin{enumerate}
+\item Prediction
+\item Preventing overfitting
+\item Robust inference
+\end{enumerate}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Binary-Time-Series-Cross-Section Data}
+\begin{itemize}
+\item Very common data format (Beck et al. +2500 citations, Carter and Signorino +1000 citations)
+\item Binary outcome variable
+\item Across observations 
+\item Over time
+\end{itemize}
+\end{frame}
+
+\begin{frame}{What is special about BTSC?}
+\begin{itemize}
+\item In some instances: Special case of duration data (Beck et al. 1998)
+\item This is the case if underlying risk of occurrence varies over time
+\item Even though this means that cases are IID, risk information can only be gathered by observing complete process
+\end{itemize}
+\end{frame}
+
+\begin{frame}{When should you care about type of CV}
+\begin{itemize}
+\item If time doesn't matter you are fine
+\begin{itemize}
+\item if it does...
+\end{itemize}
+\item If time has a linear trend you are fine
+\begin{itemize}
+\item if it doesn't ...
+\end{itemize}
+\item then type of cross-validation matters
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Cross-validation approaches}
+\begin{itemize}
+\item Rolling-window (starting with about 60 percent of data)
+\item 10-fold cross-validation
+\item Group-wise cross-validation (10-fold)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{DGP}
+\begin{itemize}
+\item Survival data (Hendry, 2014)
+\item IDs: 1000 
+\item Mean Life: 17
+\item Samples: 100
+\end{itemize}
+\centering
+\includegraphics[scale=.3]{/Users/jupiter/Desktop/hist_cox.png}
+\end{frame}
+
+
+\begin{frame}{Logit: Y=X+t+t$^2$+t$^3$}
+\centering
+\includegraphics[scale=.3]{../../../../Desktop/results_cox.png}
+\end{frame}
+
+
+\begin{frame}{Results}
+\centering
+\begin{tabular}{ccc}
+Cross-validation & True-Positive Rate & True-Negative Rate\\ \hline
+Group-wise CV (10-fold) & 0.003416897 & 97.039709700 \\
+10-fold CV & 0.002451740 & 97.146360996 \\
+Rolling-window CV & 0.071861408 & 92.377115650  \\
+\end{tabular}
+\end{frame}
+
+
+
+\begin{frame}{DGP}
+\begin{itemize}
+\item Binomial with t+t$^2$+t$^3$
+\item Observations: 1000
+\item Samples: 100
+\item Similar to Carter and Signorino
+\end{itemize}
+\centering
+\includegraphics[scale=.3]{../../../../Desktop/hist_logit.png}
+\end{frame}
+
+
+\begin{frame}{Logit: Y=X+t+t$^2$+t$^3$}
+\centering
+\includegraphics[scale=.3]{../../../../Desktop/results_logit.png}
+\end{frame}
+
+\begin{frame} {Logit}
+\begin{tabular}{ccc}
+Cross-validation & True-Positive Rate & True-Negative Rate\\ \hline
+Group-wise CV (10-fold) & 25.20300 & 41.17200 \\
+10-fold CV & 25.26900 & 41.18800  \\
+Rolling-window CV & 34.38667 & 26.12000   \\
+\end{tabular}
+\end{frame}
+ 
+
+
+
+\begin{frame}{Other preliminary insights}
+\begin{itemize}
+\item Smaller samples type of CV matters more
+\item Especially if risk is increasing over time
+\item And risk `peaks' at particular time points
+\end{itemize}
+\end{frame}
+
+
+
+
+
+\begin{frame}{Conclusion and looking ahead}
+\begin{itemize}
+\item Settle on one DGP
+\item Further Monte-Carlo experiments
+\item Currently showing differences in existing work
+\item Providing diagnostics for best CV type
+\item Understanding CV in auto-regressive data (non-IID)
+\end{itemize}
+\end{frame}
+
+\end{document}
+
+
+
+
+

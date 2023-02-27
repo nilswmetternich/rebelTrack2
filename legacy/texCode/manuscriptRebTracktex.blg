@@ -1,0 +1,84 @@
+This is BibTeX, Version 0.99d (TeX Live 2015)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: manuscriptRebTracktex.aux
+The style file: apsr.bst
+Database file #1: Nils_Lit2.bib.bib
+Repeated entry---line 1246 of file Nils_Lit2.bib.bib
+ : @article{gurr1986forecasting
+ :                             ,
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 2035 of file Nils_Lit2.bib.bib
+ :   
+ :   year={2007}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Repeated entry---line 5105 of file Nils_Lit2.bib.bib
+ : @article{hoff:2007
+ :                   ,
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 5452 of file Nils_Lit2.bib.bib
+ :   
+ :   address={Princeton}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Repeated entry---line 6846 of file Nils_Lit2.bib.bib
+ : @article{Ward2013
+ :                  ,
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 7108 of file Nils_Lit2.bib.bib
+ :  
+ :  @book{blainey88,
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Repeated entry---line 7519 of file Nils_Lit2.bib.bib
+ : @article{fjelde2012
+ :                    ,
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 7790 of file Nils_Lit2.bib.bib
+ : 
+ : url = {http://www.icr.ethz.ch/data}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--empty publisher in phoenix
+You've used 65 entries,
+            2874 wiz_defined-function locations,
+            999 strings with 13948 characters,
+and the built_in function-call counts, 308064 in all, are:
+= -- 50885
+> -- 3403
+< -- 0
++ -- 24158
+- -- 1202
+* -- 26680
+:= -- 61149
+add.period$ -- 260
+call.type$ -- 65
+change.case$ -- 845
+chr.to.int$ -- 65
+cite$ -- 66
+duplicate$ -- 988
+empty$ -- 2248
+format.name$ -- 1278
+if$ -- 55430
+int.to.chr$ -- 5
+int.to.str$ -- 0
+missing$ -- 72
+newline$ -- 273
+num.names$ -- 748
+pop$ -- 218
+preamble$ -- 1
+purify$ -- 975
+quote$ -- 0
+skip$ -- 850
+stack$ -- 0
+substring$ -- 72494
+swap$ -- 130
+text.length$ -- 910
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 246
+warning$ -- 1
+while$ -- 1512
+width$ -- 0
+write$ -- 907
+(There were 8 error messages)

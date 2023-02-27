@@ -1,0 +1,70 @@
+Package: rebeltrack
+Type: Package
+Title: Rebel Track
+Version: 0.1.1
+Authors@R: c(
+    person("Nils", "Metternich", email = "n.metternich@ucl.ac.uk", role = c("aut", "cre")),
+    person("Altaf", "Ali", email = "altaf.ali@ucl.ac.uk", role = c("aut"))
+  )
+Description: An R Package for providing for generating measures of rebel organisations.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+VignetteBuilder: knitr
+URL: https://github.com/nilswmetternich/rebeltrack
+BugReports: https://github.com/nilswmetternich/rebeltrack/issues
+Imports: 
+    rlang,
+    magrittr,
+    methods,
+    dplyr,
+    tidyr,
+    httr,
+    haven,
+    lubridate,
+    readr,
+    readxl,
+    yaml,
+    matlab,
+    Matrix,
+    sf,
+    slam
+Suggests: 
+  testthat,
+  knitr,
+  rmarkdown,
+  pkgdown
+Collate: 
+    'rebeltrack_actor_name.R'
+    'rebeltrack_adjacency_matrix.R'
+    'rebeltrack_casualty_count.R'
+    'rebeltrack_config.R'
+    'rebeltrack_const.R'
+    'rebeltrack_dataset.R'
+    'rebeltrack_dataframe.R'
+    'rebeltrack_days_affected.R'
+    'rebeltrack_distance_to_border.R'
+    'rebeltrack_distance_to_capital.R'
+    'rebeltrack_download.R'
+    'rebeltrack_event_count.R'
+    'rebeltrack_gid_actors_active.R'
+    'rebeltrack_gid_actors_present.R'
+    'rebeltrack_gid_adjacency_matrix.R'
+    'rebeltrack_gid_casualty_count.R'
+    'rebeltrack_gid_clean_up.R'
+    'rebeltrack_gid_dataframe.R'
+    'rebeltrack_gid_days_affected.R'
+    'rebeltrack_gid_distance_to_border.R'
+    'rebeltrack_gid_distance_to_capital.R'
+    'rebeltrack_gid_event_count.R'
+    'rebeltrack_gid_national_count.R'
+    'rebeltrack_gid_national_ratio.R'
+    'rebeltrack_gid_transnational_count.R'
+    'rebeltrack_gid_transnational_ratio.R'
+    'rebeltrack_grids_affected.R'
+    'rebeltrack_load_dataset.R'
+    'rebeltrack_summary_stats.R'
+    'rebeltrack_transnational_count.R'
+    'rebeltrack_transnational_ratio.R'
+    'rebeltrack_utils.R'

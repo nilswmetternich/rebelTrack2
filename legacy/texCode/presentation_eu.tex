@@ -1,0 +1,712 @@
+\documentclass{beamer}
+%\usetheme{Madrid}
+%\usetheme{Berlin}
+%\usepackage{german}
+%\usepackage[latin1]{inputenc}
+%\usepackage[T1]{fontenc}
+%\mode<presentation>
+ %{
+ \usetheme{Madrid}
+ \setbeamercolor*{palette primary}{use=structure,fg=black,bg=p7408C}
+ \setbeamercolor*{palette secondary}{use=structure,fg=black,bg=p7406U}
+ \setbeamercolor*{palette tertiary}{use=structure,fg=black,bg=p716C}
+ %}
+ 
+ \definecolor{p7408C}{HTML}{F6BE00}
+  \definecolor{p7406U}{HTML}{FCB315}
+ \definecolor{pyelloy}{HTML}{F6C100}
+ \definecolor{p716C}{HTML}{F17C0E}
+ 
+  \definecolor{p8C}{HTML}{A19589}
+ \setbeamercolor{itemize item}{fg=p8C} % all frames will have red bullets
+ \setbeamertemplate{itemize item}[triangle]
+ \setbeamertemplate{itemize subitem}{\color{p7408C}$\blacktriangleright$}
+
+\setbeamercolor{block title}{bg=p7408C,fg=black}
+
+\usepackage{etex}
+\usepackage{tikz,pgfplots}
+\usepackage{picture}
+
+%\usepackage{german}
+%\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{changebar}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage[T1]{fontenc}
+\usepackage[ansinew]{inputenc}
+\usepackage{setspace}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{dcolumn}
+\usepackage{color}
+\usepackage{colortbl}
+\definecolor{lightgray}{gray}{0.8}
+\definecolor{lightblue}{rgb}{0.8,0.8,0.8}
+\usepackage{hyperref}
+\usepackage{xcolor} 
+\usepackage{array} 
+\usepackage{subfig}
+\usepackage{makecell}
+\usetikzlibrary{arrows,positioning} 
+
+
+\graphicspath{{/Users/jupiter/Dropbox/elements/coala/graphs/}{../../../../Dropbox/elements/spatialrebels/graphs/}{../../../../Dropbox/elements/spatialrebels/graphspres/}}
+
+
+
+\begin{document}
+
+\title[UCL]
+{
+RebelCast: Forecasting rebel organization behavior}
+\author[EU JRC/EEAS workshop]
+{
+Nils W. Metternich\\
+\footnotesize{\emph{COnflict Analysis LAb (COALA)}}\\
+\tiny{presentation includes contributions by: \\
+Gokhan Ciflikli (LSE)\\
+Altaf Ali (UCL)\\
+Elio Amicarelli (UCL)\\ [2ex]
+} 
+\textbf{Funded by the Economic and Social Research Council (UK)}}
+\institute[]
+{		Department of Political Science\\
+		University College London\\
+		n.metternich@ucl.ac.uk\\[4ex]
+		}
+
+\date{May 31, 2017}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{Message}
+\begin{itemize}
+\item Going beyond structural factors to explain onset, duration, escalation, and recurrence
+\begin{itemize}
+\item Demand to go beyond structural factors 
+\item Focus on actors that actually make decisions about conflict
+\end{itemize}
+\item Predicting conflict dynamics (escalation, duration)
+\begin{itemize}
+\item Machine Learning approaches help to improve sensitivity-specificity tradeoff (true-positives/true-negatives) (Muchlinski et al. 2016)
+\item Ensemble Bayesian Model Averaging models help us to integrate the predictions from several models (Montgomery, Hollenbach, and Ward, 2012)
+\end{itemize}
+\end{itemize}
+\tiny{Hollenbach et al. (2017) on imputation}
+\end{frame}
+
+\begin{frame}{Predictive turn in conflict studies}
+\begin{minipage}{2.1in}
+\begin{tiny}
+\begin{itemize}
+\item Gurr and Lichbach, 1986
+\item O'brien, 2002
+\item Schrodt, 2006
+\item Goldstone et al., 2010
+\item Ward, 2010
+\item Weidmann and Ward, 2010
+\item Schneider, Gleditsch and Carey, 2011
+\end{itemize}
+ \end{tiny}
+\end{minipage}
+\begin{minipage}{2.5in}
+\begin{tiny}
+\begin{itemize}
+\item De Mesquita, 2011
+\item Ward et al., 2013
+\item Gleditsch and Ward, 2013
+\item Hegre et al., 2013
+\item Bell et al., 2013
+\item Brandt, Freeman and Schrodt, 2014
+\item Muchlinski et al., 2016
+\end{itemize}
+ \end{tiny}
+\end{minipage}
+
+\begin{block}{Characteristics of predictive approaches} 
+\begin{itemize}
+\item $Y=f(X)+\epsilon$
+\item Focus on $\hat{Y}$ rather than $\hat{\beta}$
+\item $\hat{Y}=\hat{f}$
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}{RebelCast}
+\begin{itemize}
+\item Based on the insights of interdependent actors, we are developing two forecasting models
+\begin{itemize}
+\item RebelCast Escalation
+\begin{itemize}
+\item Country
+\item Rebel
+\end{itemize}
+\item RebelCast Duration
+\begin{itemize}
+\item Country
+\item Rebel
+\end{itemize}
+\end{itemize}
+\item Both use data from RebelTrack
+\begin{itemize}
+\item R package calculating monthly rebel organization measures based on UCDP GED
+\begin{itemize}
+\item Area active
+\item Event count
+\item Distance to capital
+\item Mean fighting position
+\item Distance to other rebel organizations
+\item etc
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{RebelTrack}
+\centering
+\begin{figure}
+\includegraphics[scale=0.05]{fightAreaNDA.jpeg}
+\caption{NDA (National Democratic Alliance). Hull area of fighting activity}
+\end{figure}
+\end{frame}
+
+\begin{frame}{RebelTrack}
+\centering
+\begin{figure}
+\includegraphics[scale=0.05]{fightAreaSPLMA.jpeg}
+\caption{SPLM/A (South People's Liberation Movement). Hull area of fighting activity}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}{RebelTrack}
+\centering
+\begin{figure}
+\includegraphics[scale=0.45]{area_grid.pdf}
+\caption{GAM (Free Aceh Movement). Number of active PRIO grids (0.5 $\times$ 0.5 decimal degree) per month}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}{RebelTrack}
+\centering
+\begin{figure}
+\includegraphics[scale=0.45]{escalation.pdf}
+\caption{GAM (Free Aceh Movement). Number of active days per month}
+\end{figure}
+\end{frame}
+
+
+%\begin{frame}{RebelCast Escalation}
+%\centering
+%\begin{figure}
+%\includegraphics[scale=.4]{../../../../Dropbox/elements/coala/graphs/ANG.pdf}
+%\caption{Three rebel organizations in Angola. Red refers to the aggregate escalation. Grey to the individual organization.}
+%\end{figure}
+%\end{frame}
+
+%\begin{frame}{RebelCast Escalation}
+%Machine learning approach
+%\begin{itemize}
+%\item EBMA models
+%\item Random Forests
+%\item Outcome: UCDP-GED events (excluding one-side violence) per country-month 
+%\item Input: 
+%\begin{itemize}
+%\item RebelCast variables
+%\item ICEWS/Phoenix
+%\end{itemize}
+%\end{itemize}
+%\end{frame}
+
+%\begin{frame}{RebelCast Duration}
+%\centering
+%\includegraphics[scale=0.5]{duration_GED.pdf}
+%\end{frame}
+
+\begin{frame}{RebelCast Duration}{When does the fighting stop?}
+Machine learning approach
+\begin{itemize}
+\item EBMA 
+%\item Multi-state models
+\item Outcome: UCDP GED Rebel spells (Fighting duration)
+\item Input
+\begin{itemize}
+\item RebelCast variables
+\item ICEWS/Phoenix
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}{Explanatory approaches to civil conflict duration}
+%\includegraphics[width=5cm]{james.pdf}
+%and references
+\begin{itemize}
+
+\item Structural 
+\begin{itemize}
+\item Poverty (e.g. Collier, Hoeffler and Soderbom, 2004)
+\item Low state capacity (e.g. Mason and Fett, 1996)
+\item Resources (e.g. Buhaug, Gates and Lujala, 2009)
+\item Sons of Soil (e.g. Fearon, 2004)
+\end{itemize}
+
+\item Third parties
+\begin{itemize}
+\item (e.g. Regan, 2002)
+\end{itemize}
+
+\item Rebel organization characteristics
+\begin{itemize}
+\item Strength (e.g. Cunningham, Gleditsch and Salehyan, 2009)
+\item Tactics (e.g. Balcells and Kalyvas, 2014)
+\item Ethnic Linkage (e.g. Wucherpfennig, Metternich, Cederman, and Gleditsch, 2012)
+\end{itemize}
+
+\item Rebel organization configurations
+\begin{itemize}
+\item Veto (e.g. Cunningham, 2006)
+\item Alliances (e.g. Christia, 2012)
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Predictive approaches to civil conflict duration}
+%\includegraphics[width=5cm]{james.pdf}
+%and references
+\begin{itemize}
+
+\item Predictive 
+\begin{itemize}
+\item Pilster and B\"{o}hmelt, 2014
+\item Chiba, Metternich, Ward, 2015
+\item Mason, Weingarten, and Fett, 1999
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Predictive approaches to conflict duration}
+\begin{center}
+\begin{tikzpicture}[scale=2.5]
+    % Draw axes
+    \draw [<->,thick] (0,2) node (yaxis) [above] {Interpretability}
+        |- (3,0) node (xaxis) [right] {Flexibility};
+      
+    \draw [] (0.6,1.7)  node[align=left,   below] {Parametric Models};
+        \draw [] (0.6,1.5) node[align=left,   below] {};
+            \draw [] (2.5,0.5)  node[align=left,   below] {ML};
+        %\draw [] (0.6,1.5) node[align=left,   below] {Cox Models};
+       \end{tikzpicture}
+       \end{center}
+\end{frame}
+
+
+\begin{frame}{Methodology Pilot}
+\begin{table}[!htbp] \centering 
+  \caption{Cox Proportional Hazards Estimates, Wucherpfennig et al. (2012)} 
+  \label{w2012cox} 
+\small 
+\scalebox{0.4}{
+\begin{tabular}{@{\extracolsep{5pt}}lD{.}{.}{-3} D{.}{.}{-3} } 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-3} 
+\\[-1.8ex] & \multicolumn{2}{c}{\textit{War Duration}} \\ 
+\\[-1.8ex] & \multicolumn{1}{c}{\textit{Cox}} & \multicolumn{1}{c}{\textit{Cox}} \\ 
+ & \multicolumn{1}{c}{\textit{Prop. Hazards}} & \multicolumn{1}{c}{\textit{Prop. Hazards}} \\ 
+\\[-1.8ex] & \multicolumn{1}{c}{TVC$^\dagger$} & \multicolumn{1}{c}{Non-TVC$^\ddagger$}\\ 
+\hline \\[-1.8ex] 
+  Ethnic Linkage with Included Group & 0.307 & 0.374 \\ 
+  & (0.234) & (0.145) \\ 
+  Ethnic Linkage with Excluded Group & -0.419^{**} & -0.415 \\ 
+  & (0.165) & (0.066) \\ 
+  Territorial Conflict  & 0.061 & 0.113 \\ 
+  & (0.172) & (0.068) \\ 
+  Strong Central Command  & 0.453^{***} & 0.132 \\ 
+  & (0.151) & (0.078) \\ 
+  Legal Political Wing & 0.356^{*} & 0.033 \\ 
+  & (0.166) & (0.084) \\ 
+  Territorial Control  & -0.350^{**} & -1.046^{***} \\ 
+  & (0.150) & (0.067) \\ 
+  Democracy & -0.849^{***} & -1.274^{***} \\ 
+  & (0.174) & (0.066) \\ 
+  ln GDP p.c. & 0.086 & -0.008 \\ 
+  & (0.074) & (0.031) \\ 
+  ln Population & -0.044 & 0.049 \\ 
+  & (0.049) & (0.021) \\ 
+  Natural Resources & -0.354^{**} & -0.730^{***} \\ 
+  & (0.143) & (0.064) \\ 
+ \hline \\[-1.8ex] 
+Observations & \multicolumn{1}{c}{1,941} & \multicolumn{1}{c}{1,921} \\ 
+Log Likelihood & \multicolumn{1}{c}{-1,143.255} & \multicolumn{1}{c}{-10,031.730} \\ 
+Wald Test (df = 10) & \multicolumn{1}{c}{73.340$^{***}$} & \multicolumn{1}{c}{72.270$^{***}$} \\ 
+LR Test (df = 10) & \multicolumn{1}{c}{71.003$^{***}$} & \multicolumn{1}{c}{918.340$^{***}$} \\ 
+Score (Logrank) Test (df = 10) & \multicolumn{1}{c}{67.764$^{***}$} & \multicolumn{1}{c}{927.270$^{***}$} \\ 
+\hline 
+\hline \\[-1.8ex] 
+
+\textit{Non-clustered standard errors in parentheses}  & \multicolumn{2}{r}{p-values for clustered s.e. $^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
+$^\dagger$ Time-varying covariates & \\
+$^\ddagger$ Variables are fixed to their onset-year values &
+\end{tabular} }
+\end{table} 
+\end{frame}
+
+\begin{frame}{ML: Predicting the end of conflicts}
+\begin{figure}
+\includegraphics[scale=0.3]{../../../../Desktop/ROC_dot.pdf}
+\caption{Machine learning predictions: Repeated 10k-fold Cross-Validation}
+\end{figure}
+\end{frame}
+
+\begin{frame}{EBMA: Predicting the end of conflicts}
+\begin{figure}
+\includegraphics[scale=0.25]{../../../../Desktop/EBMA_plot.png}
+\caption{EBMA predictions: Repeated 10k-fold Cross-Validation}
+\end{figure}
+\end{frame}
+
+\begin{frame}{EBMA: Predicting the end of conflicts}
+\begin{figure}
+\includegraphics[scale=0.6]{../../../../Desktop/EBMA_table.png}
+\caption{Performance statistics: Brier score: average squared deviation of the predicted probability. AUC: Area under the Receiver-Operating Characteristic curve. perCorrect: percentage correctly predicted (.5 cut-off) }
+\end{figure}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}{Conclusion and looking ahead}
+\begin{itemize}
+\item ML approaches allow for better Early Warning models
+\item EBMA allows to weigh strengths of different models
+\end{itemize}
+\end{frame}
+
+\end{document}
+
+
+\begin{frame}{Predicting escalation of conflicts is difficult}
+\begin{figure}
+\includegraphics[scale=0.5]{Rplot011.png}
+\caption{Predictions for continuous escalation measure}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Outcome variable}{Challenge of measuring escalation}
+\begin{figure}
+\includegraphics[scale=0.5]{extreme_values_quantiles.png}
+\caption{Creating categorial variable}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Predicting escalation of conflict}
+\begin{figure}
+\includegraphics[scale=0.5]{Rplot01.png}
+\caption{Predictions for categorial escalation measure}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\begin{table}
+\caption{RF with dispersion-based categories}
+\centering
+\scalebox{0.75}{
+\begin{tabular}[t]{l|r|r|r|r|r}
+\hline
+  & Sensitivity & Specificity & Pos Pred Value & Neg Pred Value & Balanced Accuracy\\
+\hline
+Class: 0 & 0.9939446 & 0.7546296 & 0.9559068 & 0.9588235 & 0.8742871\\
+\hline
+Class: 1 & 0.6903226 & 0.9806902 & 0.8199234 & 0.9613371 & 0.8355064\\
+\hline
+Class: 2 & 0.5655738 & 0.9961861 & 0.8734177 & 0.9801126 & 0.7808799\\
+\hline
+\end{tabular}}
+
+\caption{Strong but naive classifier (only lagged DV)}
+\centering
+\scalebox{0.75}{
+\begin{tabular}[t]{l|r|r|r|r|r}
+\hline
+  & Sensitivity & Specificity & Pos Pred Value & Neg Pred Value & Balanced Accuracy\\
+\hline
+Class: 0 & 0.9566755 & 0.7706856 & 0.9570986 & 0.7688679 & 0.8636805\\
+\hline
+Class: 1 & 0.6072607 & 0.9500420 & 0.6072607 & 0.9500420 & 0.7786514\\
+\hline
+Class: 2 & 0.6583333 & 0.9836257 & 0.6528926 & 0.9840094 & 0.8209795\\
+\hline
+\end{tabular}}
+\end{table}
+\end{frame}
+
+\begin{frame}{Next steps}
+\begin{itemize}
+\item Implement further ML approaches
+\item Leverage heterogeneity through EBMAs
+\item Rebel organization implementation
+\end{itemize}
+\end{frame}
+
+
+
+
+
+\begin{frame}
+\begin{table}
+\caption{Estimates for the main fighting duration models in accelerated failure time format. Standard errors are provided in parenthesis. Outcome variable is the fighting duration of rebel organizations measured in days.}
+\begin{center}
+\scalebox{0.5}{
+\begin{tabular}{l D{.}{.}{4.5}@{} D{.}{.}{4.5}@{} D{.}{.}{4.5}@{} D{.}{.}{4.5}@{} D{.}{.}{4.5}@{} }
+\hline
+                         & \multicolumn{1}{c}{Veto Model} & \multicolumn{1}{c}{Spatial Model} & \multicolumn{1}{c}{Spatial Veto Model} & \multicolumn{1}{c}{Secession Model} & \multicolumn{1}{c}{Non-Secession Model} \\
+\hline
+Intercept                & 7.28^{***}  & 7.11^{***}  & 7.11^{***}  & 8.46^{***}  & 7.14^{***}  \\
+                         & (0.30)      & (0.30)      & (0.30)      & (0.51)      & (0.33)      \\
+Time until Entry$_{log}$ & 0.01        & -0.00       & -0.00       & -0.07^{*}   & 0.03        \\
+                         & (0.03)      & (0.02)      & (0.02)      & (0.04)      & (0.03)      \\
+Splinter                 & 0.12        & -0.04       & -0.03       & 0.41        & -0.13       \\
+                         & (0.26)      & (0.26)      & (0.26)      & (0.42)      & (0.33)      \\
+Alliance                 & -0.25       & -0.55^{*}   & -0.56^{*}   & -0.04       & -0.69^{*}   \\
+                         & (0.31)      & (0.31)      & (0.31)      & (0.67)      & (0.36)      \\
+Previous Victory         & -0.03       & -0.07       & -0.06       & 0.71        & -0.16       \\
+                         & (0.10)      & (0.10)      & (0.10)      & (0.61)      & (0.11)      \\
+Previous Agreement       & -0.07       & -0.08       & -0.09       & 0.12        & -0.06       \\
+                         & (0.10)      & (0.09)      & (0.09)      & (0.47)      & (0.10)      \\
+Legal Political Wing     & -0.54^{**}  & -0.55^{**}  & -0.54^{**}  & -1.13^{***} & -0.44       \\
+                         & (0.22)      & (0.22)      & (0.22)      & (0.34)      & (0.28)      \\
+Rebel Strength           & -0.39^{***} & -0.36^{***} & -0.36^{***} & -0.56^{**}  & -0.43^{***} \\
+                         & (0.12)      & (0.12)      & (0.12)      & (0.24)      & (0.14)      \\
+Veto                     & 0.25^{*}    &             & -0.10       & -0.10       & 0.05        \\
+                         & (0.14)      &             & (0.16)      & (0.33)      & (0.17)      \\
+Secession                & 0.51^{**}   & 0.52^{***}  & 0.51^{***}  &             &             \\
+                         & (0.20)      & (0.20)      & (0.20)      &             &             \\
+Scale$_{log}$            & 0.49^{***}  & 0.47^{***}  & 0.47^{***}  & 0.30^{***}  & 0.52^{***}  \\
+                         & (0.04)      & (0.04)      & (0.04)      & (0.08)      & (0.05)      \\
+$\rho$                   &             & 0.13^{***}  & 0.14^{***}  & 0.06        & 0.13^{***}  \\
+                         &             & (0.03)      & (0.03)      & (0.05)      & (0.03)      \\
+\hline
+Log-Likelihood           & -791.91     & -782.25     & -782.05     & -202.29     & -575.20     \\
+N                        & 379         & 379         & 379         & 107         & 272         \\
+\hline
+\multicolumn{6}{l}{\scriptsize{$^{***}p<0.01$, $^{**}p<0.05$, $^*p<0.1$}}
+\end{tabular}
+}
+\label{tab:estSepAll}
+\end{center}
+\end{table}
+\end{frame}
+
+
+\begin{frame}
+\begin{table}
+\caption{Estimates for the main fighting duration models in accelerated failure time format. Standard errors are provided in parenthesis. Outcome variable is the fighting duration of rebel organizations measured in days.}
+\begin{center}
+\scalebox{0.6}{
+\begin{tabular}{l D{.}{.}{4.5}@{} D{.}{.}{4.5}@{} D{.}{.}{4.5}@{} D{.}{.}{4.5}@{} D{.}{.}{4.5}@{} }
+\hline
+                         & \multicolumn{1}{c}{Veto Model} & \multicolumn{1}{c}{Spatial Model} & \multicolumn{1}{c}{Spatial Veto Model} & \multicolumn{1}{c}{Secession Model} & \multicolumn{1}{c}{Non-Secession Model} \\
+\hline
+
+$\rho$                   &             & 0.13^{***}  & 0.14^{***}  & 0.06        & 0.13^{***}  \\
+                         &             & (0.03)      & (0.03)      & (0.05)      & (0.03)      \\
+\hline
+Log-Likelihood           & -791.91     & -782.25     & -782.05     & -202.29     & -575.20     \\
+N                        & 379         & 379         & 379         & 107         & 272         \\
+\hline
+\multicolumn{6}{l}{\scriptsize{$^{***}p<0.01$, $^{**}p<0.05$, $^*p<0.1$}}
+\end{tabular}
+}
+\label{tab:estSepAll}
+\end{center}
+\end{table}
+\end{frame}
+
+\begin{frame}{Strategic perspective}
+\begin{block}{Definition}
+A theoretical approach that views individuals [actors] as choosing their actions by taking into account the \alert{anticipated actions and responses of others} with the intention of maximizing their own welfare (B. de Mesquita 2014, 535).
+\end{block}
+\end{frame}
+
+\begin{frame}{N-Player Network Game Theoretic Model}
+Consideration 1:
+\begin{itemize}
+\item Rebel organizations in multi-actor conflicts share the objective of either:
+\begin{itemize}
+\item overthrowing the government
+\item gaining regional autonomy/secession
+\end{itemize}
+\item E.g., ousting the regime of Muammar Gaddafi or Palestinian independence
+\item[]
+\item Benefits of incompatibilities like democratization, respect for human rights, right for self-determination, end to alien rule are not limited to any particular opposition group
+\item Non-excludability and non-rivalry
+\item[$\rightarrow$] \alert{Public goods}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Public Goods Game}
+Following Bramoull\'{e}, Kranton and D'amours 2014:
+\begin{align}
+U_{i}(y_i,\mathbf{y_j},\delta,\mathbf{W})= b_{i}\left(y_{i} +  \delta \sum_{j} w_{ij}y_{j}\right) - c_{i}y_{i} \label{EU_subst}
+\end{align}
+Best response:
+\begin{align}
+\label{best:response}
+y_{i}^{*}&= \bar{y_{i}}- \delta \sum_{j} w_{ij}y_{j} &\text{if} \hspace{2mm} \delta \sum_{j} w_{ij}y_{j}<\bar{y_{i}}\\ \notag
+y_{i}^{*}&=0 &\text{if} \hspace{2mm} \delta \sum_{j} w_{ij}y_{j}\geq \bar{y_{i}}
+\end{align} 
+\end{frame}
+
+\begin{frame}{N-Player Network Game Theoretic Model}
+Consideration 2:
+\begin{itemize}
+\item Rebel organizations compete against one another
+\begin{itemize}
+\item Rebel-rebel violence (Fjelde  \& Nillson 2012)
+\item Dual-contest (Cunningham, Bakke \& Seymour 2012)
+\item Fragmentation/splintering
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Theoretical Model 2}
+Rivalrous Good Network Game
+\begin{equation}
+U_{i}(y_i,\mathbf{y_j},\delta,\mathbf{W})= b_{i}\left(y_{i} -  \gamma \sum_{j} w_{ij}y_{j} \right) - c_{i}y_{i} \label{EU_comp}
+\end{equation}
+Best response
+\begin{equation}
+y_{i}^{*}= \bar{y_{i}}+ \delta \sum_{j} w_{ij}y_{j} 
+\label{best_comp}
+\end{equation} 
+\end{frame}
+
+
+\begin{frame}{Combined Model}
+\begin{align}
+U_{i}(y_i,\mathbf{y_j},\delta,\mathbf{W})&= b_{i}\left(y_{i} +  \delta \sum_{j} w_{ij}y_{j} -  \gamma \sum_{j} w_{ij}y_{j} \right) - c_{i}y_{i} \label{EU_comp}\\
+% &= b_{i}\left(y_{i} +  (\delta- \gamma) \sum_{j} w_{ij}y_{j} \right) - c_{i}y_{i}\\
+%U_{i}(y_i,\mathbf{y_j},\delta,\mathbf{W}) 
+&= b_{i}\left(y_{i} +  \rho \sum_{j} w_{ij}y_{j} \right) - c_{i}y_{i}\label{EU_joint}
+\end{align}
+where $\rho =\delta-\gamma$.
+\end{frame}
+
+\begin{frame}{Best response functions}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{effortsSim3.pdf}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Non-aligned fighting durations}
+\begin{center}
+\includegraphics[scale=0.35]{enterfight.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}{Model fit and insample prediction}
+\begin{figure}
+\begin{center}
+%\subfigure[Absolute deviation]{\includegraphics[scale=0.4]{twobytwoc.pdf}}
+\subfloat[Predicted densities for separatist conflict sample.]{\includegraphics[width=4cm]{twobytwoaS.pdf}}
+\subfloat[Relative advantage for separatist conflict sample.]{\includegraphics[width=4cm]{twobytwodS.pdf}}
+\subfloat[Case-wise comparison for separatist conflict sample.]{\includegraphics[width=4cm]{twobytwobS.pdf}} 
+\end{center}
+\end{figure}
+\end{frame}
+
+
+
+\begin{frame}{Model fit and insample prediction}
+\begin{figure}
+\begin{center}
+%\subfigure[Absolute deviation]{\includegraphics[scale=0.4]{twobytwoc.pdf}}
+\subfloat[Predicted densities for non-separatist conflict sample.]{\includegraphics[width=4cm]{twobytwoaNS.pdf}}
+\subfloat[Relative advantage for non-separatist conflict sample.]{\includegraphics[width=4cm]{twobytwodNS.pdf}}
+\subfloat[Case-wise comparison for non-separatist conflict sample.]{\includegraphics[width=4cm]{twobytwobNS.pdf}}
+\end{center}
+\end{figure}
+\end{frame}
+
+\begin{frame}{ICEWS}
+\centering
+\includegraphics[scale=0.1]{DRC.png}
+\end{frame}
+
+
+\begin{frame}{Challenges made for machine learning}
+\begin{itemize}
+\item Theoretical limitatations
+\item P>N
+\item Non-linear processes
+\item Higher order interactions
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Idea behind trees}
+\begin{itemize}
+\item Given sample $N$ and regressors $X_{i}$, we sequentially partition the covariate space into subspaces in a way that reduces the sum of squared residuals as much as possible. 
+
+
+\item Suppose, we have two covariates $X_{1}$ and $X_{2}$.
+
+\item We can split the sample by $X{_1}<c$ versus $X{_1} \leq c$, or $X{_2}<c$ versus $X{_2} \leq c$. 
+
+\item We look for the split that minimizes the sum of squared residuals. 
+
+\item If a variable partitions the data perfectly sum of squared residuals equals 0
+
+\item Then we consider the next split for each of the two subsets. 
+
+\item Stop once the reduction in the sum of squared residuals is below some threshold. 
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Random forests}
+Non-parametric statistical learning approach
+\begin{enumerate}
+\item Draw $B$ bootstrap samples from the original data.
+\item Grow a tree for each bootstrapped data set. At each node of the tree, randomly select $p$ number of predictors for splitting on. 
+\begin{itemize}
+\item A node is split on that predictor which maximizes survival differences across daughter nodes.
+\end{itemize}
+\item Grow the tree to full size under the constraint that a terminal node should have no less than $n$ unique observations.
+\item Calculate an ensemble-wide sum of squared residuals by combining information from $B$ trees.
+%\item Compute an out-of-bag (OOB) error rate for the forest ensemble, derived by using $b$ trees, where $b=1, \dots, B$.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Multi-actor Conflicts}
+\begin{figure}[b!]
+\centering
+\includegraphics[scale=0.4]{barplot.pdf}
+\caption{Number of rebel organizations in one UCDP conflict. Left panel illustrates difference between single and multi-actor conflicts. Right panel provides insights to the actual number of rebel organizations in these conflicts. 81 UCDP armed conflicts are single actor conflicts, 72 conflicts involve multiple parties and there exists a notable variation in how many rebel organizations participate in multi-actor conflicts.}
+\label{fig:bar}
+\end{figure}
+\end{frame}
+
+
+
+
