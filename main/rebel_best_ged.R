@@ -22,19 +22,4 @@ ucdp_best <- ucdp_ged %>%
 						group_by(side_id,date_start) %>%
 							summarise(best=sum(best,na.rm=TRUE))
 							
-
-
-
-
-
-#Best estimate
-
-#Events
-
-#Event-days
-
-#Distance to border
-
-#Distance to capital
-
-#Transnational
+save(ucdp_best, file='~/Dropbox/elements/coala/rebelCast/ucdp_best.rda')

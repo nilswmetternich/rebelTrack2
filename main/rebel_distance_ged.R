@@ -35,6 +35,7 @@ ucdp_distance <- ucdp_ged %>%
 						group_by(side_id,date_start) %>%
 							summarise(mean.bdist3=mean(mean.bdist3,na.rm=FALSE),mean.capdist=mean(mean.capdist,na.rm=FALSE))
 
+save(ucdp_distance, file='~/Dropbox/elements/coala/rebelCast/ucdp_distance.rda')
 
 
 

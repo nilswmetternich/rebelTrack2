@@ -24,18 +24,5 @@ ucdp_events <- ucdp_ged %>%
 							summarise(events=sum(event,na.rm=TRUE))
 							
 
+save(ucdp_events, file='~/Dropbox/elements/coala/rebelCast/ucdp_events.rda')
 
-
-
-
-#Best estimate
-
-#Events
-
-#Event-days
-
-#Distance to border
-
-#Distance to capital
-
-#Transnational

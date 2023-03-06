@@ -28,10 +28,6 @@ ucdp_grids <- ucdp_ged %>%
 							
 
 
+save(ucdp_grids, file='~/Dropbox/elements/coala/rebelCast/ucdp_grids.rda')
 
-#Distance to border
-
-#Distance to capital
-
-#Transnational
 

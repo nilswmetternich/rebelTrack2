@@ -55,6 +55,6 @@ E(net2)$width <- E(net2)$weight/6
 V(net2)$size <- 0.1
 l <- layout_in_circle(net2)
 plot(net2, main="Relations",layout=l,vertex.label=dimnames(array.c)[[1]], vertex.frame.color="#ffffff",vertex.label.color="black",edge.arrow.size=.2, edge.color="orange",
-     vertex.color="orange",vertex.label.cex=.5,edge.curved=.1)
+     vertex.color="orange",vertex.label.cex=.5,edge.curved=.2)
 
 							

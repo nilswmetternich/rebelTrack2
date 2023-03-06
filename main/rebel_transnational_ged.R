@@ -24,13 +24,10 @@ ucdp_events <- ucdp_ged %>%
 						group_by(side_id,date_start,country_id) %>%
 							summarise(events=sum(event,na.rm=TRUE))
 
-ucdp_events <- ucdp_events %>%
+transnational_ratio <- ucdp_events %>%
 						group_by(side_id,date_start) %>%
 							summarise(transnational_ratio=1-(max(events,na.rm=TRUE)/sum(events,na.rm=TRUE)))
 
+save(transnational_ratio, file='~/Dropbox/elements/coala/rebelCast/transnational_ratio.rda')
 
-
-#Distance to border
-
-#Distance to capital
 
