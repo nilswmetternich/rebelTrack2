@@ -57,6 +57,8 @@ ucdp_ged <- ucdp_ged[ucdp_ged$min.date==ucdp_ged$date_start,]
 		ucdp_ged <- unique(ucdp_ged)
 
 length(unique(ucdp_ged$side_id))==dim(ucdp_ged)[1]		
+		ucdp_ged$min.date <- lubridate::floor_date(ucdp_ged$min.date,unit = "months")	
+		ucdp_ged$max.date <- lubridate::floor_date(ucdp_ged$max.date,unit = "months")	
 
 #Expand the data set according to start and stop
 
