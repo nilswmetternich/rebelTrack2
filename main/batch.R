@@ -23,6 +23,9 @@ source('~/Documents/git/rebelTrack2/main/rebel_grids_ged.R', chdir = TRUE)
 source('~/Documents/git/rebelTrack2/main/rebel_transnational_ged.R', chdir = TRUE)
 
 source('~/Documents/git/rebelTrack2/main/merge.R', chdir = TRUE)
-source('~/Documents/git/rebelTrack2/main/lag.R', chdir = TRUE)
 
 source('~/Documents/git/rebelTrack2/main/rebel_adjacency_ged.R', chdir = TRUE)
+
+source('~/Documents/git/rebelTrack2/main/slag.R', chdir = TRUE)
+
+source('~/Documents/git/rebelTrack2/main/lag.R', chdir = TRUE)

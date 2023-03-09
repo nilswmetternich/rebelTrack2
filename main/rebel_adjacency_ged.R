@@ -22,8 +22,10 @@ ucdp_ged <- dplyr::bind_rows(ucdp_ged.a,ucdp_ged.b)
 
 ucdp_ged <- unique(ucdp_ged)
 
+ucdp_ged <- arrange(ucdp_ged,side_id,date_start)
+
 actors <- unique(c(as.character(ucdp_ged$side_id)))
-time.unit <- unique(as.character(ucdp_ged$date_start))
+time.unit <- as.character(unique(ucdp_ged$date_start))
 
 array.c <- array(0,c(length(actors),length(actors),length(time.unit)),dimnames=list(actors,actors,time.unit))
 
@@ -40,21 +42,35 @@ for(k in time.unit){
 		}}}
 
 
-#Plotting  year intervals
+#Version 1: Connected if you have fought with the same government thoughout the observation period
+
 to.plot <- which(dimnames(array.c)[[3]] %in% dimnames(array.c)[[3]])
 
 Mat <-  apply(array.c[,,to.plot],c(1,2),FUN=sum)
 
 Mat[Mat>1] <- 1
 
+save(Mat, file='~/Dropbox/elements/coala/rebelCast/Mat_v1.rda')
 
-net2 <- graph_from_adjacency_matrix(Mat,mode = "undirected", diag = FALSE, weighted=TRUE)
-#strength(net2)
-E(net2)$arrow.mode <- 0
-E(net2)$width <- E(net2)$weight/6
-V(net2)$size <- 0.1
-l <- layout_in_circle(net2)
-plot(net2, main="Relations",layout=l,vertex.label=dimnames(array.c)[[1]], vertex.frame.color="#ffffff",vertex.label.color="black",edge.arrow.size=.2, edge.color="orange",
-     vertex.color="orange",vertex.label.cex=.5,edge.curved=.2)
+
+
+
+
+#Plotting  year intervals
+# to.plot <- which(dimnames(array.c)[[3]] %in% dimnames(array.c)[[3]])
+
+# Mat <-  apply(array.c[,,to.plot],c(1,2),FUN=sum)
+
+# Mat[Mat>1] <- 1
+
+
+# net2 <- graph_from_adjacency_matrix(Mat,mode = "undirected", diag = FALSE, weighted=TRUE)
+# #strength(net2)
+# E(net2)$arrow.mode <- 0
+# E(net2)$width <- E(net2)$weight/6
+# V(net2)$size <- 0.1
+# l <- layout_in_circle(net2)
+# plot(net2, main="Relations",layout=l,vertex.label=dimnames(array.c)[[1]], vertex.frame.color="#ffffff",vertex.label.color="black",edge.arrow.size=.2, edge.color="orange",
+     # vertex.color="orange",vertex.label.cex=.5,edge.curved=.2)
 
 							
