@@ -1,11 +1,11 @@
 #laging information to panel
 
 
-load('~/Dropbox/elements/coala/rebelCast/ged_merge_sp.rda')
+load('~/Dropbox/elements/coala/rebelCast/ged_merge_sp_grid.rda')
 
 
-ged_merge_sp <- ged_merge_sp %>%
-	group_by(side_id) %>%
+ged_merge_sp_grid <- ged_merge_sp_grid %>%
+	group_by(priogrid_gid) %>%
 		mutate(best_l1 = lag(best, n=1, order_by = date_start),
 			best_l2 = lag(best, n=2, order_by = date_start),
 			best_l3 = lag(best, n=3, order_by = date_start),
@@ -19,8 +19,8 @@ ged_merge_sp <- ged_merge_sp %>%
 			best_l11 = lag(best, n=11, order_by = date_start),
 			best_l12 = lag(best, n=12, order_by = date_start))
 
-ged_merge_sp <- ged_merge_sp %>%
-	group_by(side_id) %>%
+ged_merge_sp_grid <- ged_merge_sp_grid %>%
+	group_by(priogrid_gid) %>%
 		mutate(days_l1 = lag(days, n=1, order_by = date_start),
 			days_l2 = lag(days, n=2, order_by = date_start),
 			days_l3 = lag(days, n=3, order_by = date_start),
@@ -34,8 +34,8 @@ ged_merge_sp <- ged_merge_sp %>%
 			days_l11 = lag(days, n=11, order_by = date_start),
 			days_l12 = lag(days, n=12, order_by = date_start))
 
-ged_merge_sp <- ged_merge_sp %>%
-	group_by(side_id) %>%
+ged_merge_sp_grid <- ged_merge_sp_grid %>%
+	group_by(priogrid_gid) %>%
 		mutate(mean.bdist3_l1 = lag(mean.bdist3, n=1, order_by = date_start),
 			mean.bdist3_l2 = lag(mean.bdist3, n=2, order_by = date_start),
 			mean.bdist3_l3 = lag(mean.bdist3, n=3, order_by = date_start),
@@ -49,8 +49,8 @@ ged_merge_sp <- ged_merge_sp %>%
 			mean.bdist3_l11 = lag(mean.bdist3, n=11, order_by = date_start),
 			mean.bdist3_l12 = lag(mean.bdist3, n=12, order_by = date_start))
 			
-ged_merge_sp <- ged_merge_sp %>%
-	group_by(side_id) %>%
+ged_merge_sp_grid <- ged_merge_sp_grid %>%
+	group_by(priogrid_gid) %>%
 		mutate(mean.capdist_l1 = lag(mean.capdist, n=1, order_by = date_start),
 			mean.capdist_l2 = lag(mean.capdist, n=2, order_by = date_start),
 			mean.capdist_l3 = lag(mean.capdist, n=3, order_by = date_start),
@@ -64,8 +64,8 @@ ged_merge_sp <- ged_merge_sp %>%
 			mean.capdist_l11 = lag(mean.capdist, n=11, order_by = date_start),
 			mean.capdist_l12 = lag(mean.capdist, n=12, order_by = date_start))
 			
-ged_merge_sp <- ged_merge_sp %>%
-	group_by(side_id) %>%
+ged_merge_sp_grid <- ged_merge_sp_grid %>%
+	group_by(priogrid_gid) %>%
 		mutate(events_l1 = lag(events, n=1, order_by = date_start),
 			events_l2 = lag(events, n=2, order_by = date_start),
 			events_l3 = lag(events, n=3, order_by = date_start),
@@ -79,8 +79,8 @@ ged_merge_sp <- ged_merge_sp %>%
 			events_l11 = lag(events, n=11, order_by = date_start),
 			events_l12 = lag(events, n=12, order_by = date_start))
 			
-ged_merge_sp <- ged_merge_sp %>%
-	group_by(side_id) %>%
+ged_merge_sp_grid <- ged_merge_sp_grid %>%
+	group_by(priogrid_gid) %>%
 		mutate(grids_l1 = lag(grids, n=1, order_by = date_start),
 			grids_l2 = lag(grids, n=2, order_by = date_start),
 			grids_l3 = lag(grids, n=3, order_by = date_start),
@@ -96,8 +96,8 @@ ged_merge_sp <- ged_merge_sp %>%
 			
 			
 
-ged_merge_sp <- ged_merge_sp %>%
-	group_by(side_id) %>%
+ged_merge_sp_grid <- ged_merge_sp_grid %>%
+	group_by(priogrid_gid) %>%
 		mutate(best.sp_l1 = lag(best.sp, n=1, order_by = date_start),
 			best.sp_l2 = lag(best.sp, n=2, order_by = date_start),
 			best.sp_l3 = lag(best.sp, n=3, order_by = date_start),
@@ -111,8 +111,8 @@ ged_merge_sp <- ged_merge_sp %>%
 			best.sp_l11 = lag(best.sp, n=11, order_by = date_start),
 			best.sp_l12 = lag(best.sp, n=12, order_by = date_start))
 
-ged_merge_sp <- ged_merge_sp %>%
-	group_by(side_id) %>%
+ged_merge_sp_grid <- ged_merge_sp_grid %>%
+	group_by(priogrid_gid) %>%
 		mutate(days.sp_l1 = lag(days.sp, n=1, order_by = date_start),
 			days.sp_l2 = lag(days.sp, n=2, order_by = date_start),
 			days.sp_l3 = lag(days.sp, n=3, order_by = date_start),
@@ -126,8 +126,8 @@ ged_merge_sp <- ged_merge_sp %>%
 			days.sp_l11 = lag(days.sp, n=11, order_by = date_start),
 			days.sp_l12 = lag(days.sp, n=12, order_by = date_start))
 
-ged_merge_sp <- ged_merge_sp %>%
-	group_by(side_id) %>%
+ged_merge_sp_grid <- ged_merge_sp_grid %>%
+	group_by(priogrid_gid) %>%
 		mutate(mean.bdist3.sp_l1 = lag(mean.bdist3.sp, n=1, order_by = date_start),
 			mean.bdist3.sp_l2 = lag(mean.bdist3.sp, n=2, order_by = date_start),
 			mean.bdist3.sp_l3 = lag(mean.bdist3.sp, n=3, order_by = date_start),
@@ -141,8 +141,8 @@ ged_merge_sp <- ged_merge_sp %>%
 			mean.bdist3.sp_l11 = lag(mean.bdist3.sp, n=11, order_by = date_start),
 			mean.bdist3.sp_l12 = lag(mean.bdist3.sp, n=12, order_by = date_start))
 			
-ged_merge_sp <- ged_merge_sp %>%
-	group_by(side_id) %>%
+ged_merge_sp_grid <- ged_merge_sp_grid %>%
+	group_by(priogrid_gid) %>%
 		mutate(mean.capdist.sp_l1 = lag(mean.capdist.sp, n=1, order_by = date_start),
 			mean.capdist.sp_l2 = lag(mean.capdist.sp, n=2, order_by = date_start),
 			mean.capdist.sp_l3 = lag(mean.capdist.sp, n=3, order_by = date_start),
@@ -156,8 +156,8 @@ ged_merge_sp <- ged_merge_sp %>%
 			mean.capdist.sp_l11 = lag(mean.capdist.sp, n=11, order_by = date_start),
 			mean.capdist.sp_l12 = lag(mean.capdist.sp, n=12, order_by = date_start))
 			
-ged_merge_sp <- ged_merge_sp %>%
-	group_by(side_id) %>%
+ged_merge_sp_grid <- ged_merge_sp_grid %>%
+	group_by(priogrid_gid) %>%
 		mutate(events.sp_l1 = lag(events.sp, n=1, order_by = date_start),
 			events.sp_l2 = lag(events.sp, n=2, order_by = date_start),
 			events.sp_l3 = lag(events.sp, n=3, order_by = date_start),
@@ -171,23 +171,23 @@ ged_merge_sp <- ged_merge_sp %>%
 			events.sp_l11 = lag(events.sp, n=11, order_by = date_start),
 			events.sp_l12 = lag(events.sp, n=12, order_by = date_start))
 			
-ged_merge_sp <- ged_merge_sp %>%
-	group_by(side_id) %>%
-		mutate(grids.sp_l1 = lag(grids.sp, n=1, order_by = date_start),
-			grids.sp_l2 = lag(grids.sp, n=2, order_by = date_start),
-			grids.sp_l3 = lag(grids.sp, n=3, order_by = date_start),
-			grids.sp_l4 = lag(grids.sp, n=4, order_by = date_start),
-			grids.sp_l5 = lag(grids.sp, n=5, order_by = date_start),
-			grids.sp_l6 = lag(grids.sp, n=6, order_by = date_start),
-			grids.sp_l7 = lag(grids.sp, n=7, order_by = date_start),
-			grids.sp_l8 = lag(grids.sp, n=8, order_by = date_start),
-			grids.sp_l9 = lag(grids.sp, n=9, order_by = date_start),
-			grids.sp_l10 = lag(grids.sp, n=10, order_by = date_start),
-			grids.sp_l11 = lag(grids.sp, n=11, order_by = date_start),
-			grids.sp_l12 = lag(grids.sp, n=12, order_by = date_start))
+ged_merge_sp_grid <- ged_merge_sp_grid %>%
+	group_by(priogrid_gid) %>%
+		mutate(actors.sp_l1 = lag(actors.sp, n=1, order_by = date_start),
+			actors.sp_l2 = lag(actors.sp, n=2, order_by = date_start),
+			actors.sp_l3 = lag(actors.sp, n=3, order_by = date_start),
+			actors.sp_l4 = lag(actors.sp, n=4, order_by = date_start),
+			actors.sp_l5 = lag(actors.sp, n=5, order_by = date_start),
+			actors.sp_l6 = lag(actors.sp, n=6, order_by = date_start),
+			actors.sp_l7 = lag(actors.sp, n=7, order_by = date_start),
+			actors.sp_l8 = lag(actors.sp, n=8, order_by = date_start),
+			actors.sp_l9 = lag(actors.sp, n=9, order_by = date_start),
+			actors.sp_l10 = lag(actors.sp, n=10, order_by = date_start),
+			actors.sp_l11 = lag(actors.sp, n=11, order_by = date_start),
+			actors.sp_l12 = lag(actors.sp, n=12, order_by = date_start))
 
-ged_final <- ged_merge_sp
-save(ged_final,file='~/Dropbox/elements/coala/rebelCast/ged_final.rda')
+ged_final_grid <- ged_merge_sp_grid
+save(ged_final_grid,file='~/Dropbox/elements/coala/rebelCast/ged_final_grid.rda')
 
 
 

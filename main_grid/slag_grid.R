@@ -1,14 +1,14 @@
-load('~/Dropbox/elements/coala/rebelCast/ged_merge.rda')
-load('~/Dropbox/elements/coala/rebelCast/Mat_v1.rda')
+load('~/Dropbox/elements/coala/rebelCast/ged_merge_grid.rda')
+load('~/Dropbox/elements/coala/rebelCast/Mat_v1_grid.rda')
 
 
-time.periods <- unique(ged_merge$date_start)
+time.periods <- unique(ged_merge_grid$date_start)
 
 
 for(i in 1:length(time.periods)){
-ged_temp <- ged_merge[ged_merge$date_start==time.periods[i],]
-	id_temp <- as.character(ged_temp$side_id)
-		Mat_temp <- Mat[id_temp,id_temp]
+ged_temp <- ged_merge_grid[ged_merge_grid$date_start==time.periods[i],]
+	id_temp <- as.character(ged_temp$priogrid_gid)
+		Mat_temp <- Mat_grid[id_temp,id_temp]
 			  if (sum(as.numeric(id_temp)-as.numeric(colnames(Mat_temp))) != 0) {
     stop("vector and matrix not in correct order")
   }
@@ -17,12 +17,12 @@ ged_temp <- ged_merge[ged_merge$date_start==time.periods[i],]
 			ged_temp$mean.bdist3.sp <- as.vector(ged_temp$mean.bdist3 %*% Mat_temp)
 			ged_temp$mean.capdist.sp <- as.vector(ged_temp$mean.capdist %*% Mat_temp)
 			ged_temp$events.sp <- as.vector(ged_temp$events %*% Mat_temp)
-			ged_temp$grids.sp <- as.vector(ged_temp$grids %*% Mat_temp)
+			ged_temp$actors.sp <- as.vector(ged_temp$actors %*% Mat_temp)
 			ged_temp$transnational_ratio.sp <- as.vector(ged_temp$transnational_ratio %*% Mat_temp)
 			
 	
 			
-			ged_temp <- ged_temp[,which(names(ged_temp) %in% c("side_id","date_start",grep(".sp",names(ged_temp),value=TRUE)))]
+			ged_temp <- ged_temp[,which(names(ged_temp) %in% c("priogrid_gid","date_start",grep(".sp",names(ged_temp),value=TRUE)))]
 
 
 			if(i==1){
@@ -35,8 +35,8 @@ ged_temp <- ged_merge[ged_merge$date_start==time.periods[i],]
 			print(time.periods[i])
 			}
 			
-dim(ged_spatial)==dim(ged_merge)
+dim(ged_spatial)==dim(ged_merge_grid)
 
-ged_merge_sp <- left_join(ged_merge,ged_spatial)
+ged_merge_sp_grid <- left_join(ged_merge_grid,ged_spatial)
 
-save(ged_merge_sp,file='~/Dropbox/elements/coala/rebelCast/ged_merge_sp.rda')
+save(ged_merge_sp_grid,file='~/Dropbox/elements/coala/rebelCast/ged_merge_sp_grid.rda')
