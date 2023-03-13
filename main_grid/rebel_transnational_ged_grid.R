@@ -36,6 +36,6 @@ transnational_ratio_grid <- transnational_ratio_grid %>%
 							
 							
 
-save(transnational_ratio, file='~/Dropbox/elements/coala/rebelCast/transnational_ratio.rda')
+save(transnational_ratio_grid, file='~/Dropbox/elements/coala/rebelCast/transnational_ratio_grid.rda')
 
 
