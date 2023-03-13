@@ -13,19 +13,19 @@ library(igraph)
 library(nnet)
 library(VGAM)
 
-source('~/Documents/git/rebelTrack2/main/ingester.R', chdir = TRUE)
+source('~/Documents/git/rebelTrack2/main/ingester_grid.R', chdir = TRUE)
 
-source('~/Documents/git/rebelTrack2/main/rebel_best_ged.R', chdir = TRUE)
-source('~/Documents/git/rebelTrack2/main/rebel_days_ged.R', chdir = TRUE)
-source('~/Documents/git/rebelTrack2/main/rebel_distance_ged.R', chdir = TRUE)
-source('~/Documents/git/rebelTrack2/main/rebel_events_ged.R', chdir = TRUE)
-source('~/Documents/git/rebelTrack2/main/rebel_grids_ged.R', chdir = TRUE)
-source('~/Documents/git/rebelTrack2/main/rebel_transnational_ged.R', chdir = TRUE)
+source('~/Documents/git/rebelTrack2/main/rebel_best_ged_grid.R', chdir = TRUE)
+source('~/Documents/git/rebelTrack2/main/rebel_days_ged_grid.R', chdir = TRUE)
+source('~/Documents/git/rebelTrack2/main/rebel_distance_ged_grid.R', chdir = TRUE)
+source('~/Documents/git/rebelTrack2/main/rebel_events_ged_grid.R', chdir = TRUE)
+source('~/Documents/git/rebelTrack2/main/rebel_grids_ged_grid.R', chdir = TRUE)
+source('~/Documents/git/rebelTrack2/main/rebel_transnational_ged_grid.R', chdir = TRUE)
 
-source('~/Documents/git/rebelTrack2/main/merge.R', chdir = TRUE)
+source('~/Documents/git/rebelTrack2/main/merge_grid.R', chdir = TRUE)
 
-source('~/Documents/git/rebelTrack2/main/rebel_adjacency_ged.R', chdir = TRUE)
+source('~/Documents/git/rebelTrack2/main/rebel_adjacency_ged_grid.R', chdir = TRUE)
 
-source('~/Documents/git/rebelTrack2/main/slag.R', chdir = TRUE)
+source('~/Documents/git/rebelTrack2/main/slag_grid.R', chdir = TRUE)
 
-source('~/Documents/git/rebelTrack2/main/lag.R', chdir = TRUE)
+source('~/Documents/git/rebelTrack2/main/lag_grid.R', chdir = TRUE)

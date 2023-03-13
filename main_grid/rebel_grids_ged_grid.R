@@ -1,6 +1,5 @@
 #merging information to panel
 
-load('~/Dropbox/elements/coala/rebelCast/ged_panel.rda')
 load('~/Dropbox/elements/coala/rebelCast/GEDEvent_v22_1.RData')
 
 
@@ -17,17 +16,17 @@ names(ucdp_ged.b) <- c("side","side_id","date_start","priogrid_gid")
 		
 ucdp_ged <- dplyr::bind_rows(ucdp_ged.a,ucdp_ged.b)
 
-ucdp_ged$grid <- 1
+ucdp_ged$actors <- 1
 
 ucdp_ged <- unique(ucdp_ged)
 
 
-ucdp_grids <- ucdp_ged %>%
-						group_by(side_id,date_start) %>%
-							summarise(grids=sum(grid,na.rm=TRUE))
+ucdp_actors_grid <- ucdp_ged %>%
+						group_by(priogrid_gid,date_start) %>%
+							summarise(actors=sum(actors,na.rm=TRUE))
 							
 
 
-save(ucdp_grids, file='~/Dropbox/elements/coala/rebelCast/ucdp_grids.rda')
+save(ucdp_actors_grid, file='~/Dropbox/elements/coala/rebelCast/ucdp_actors_grid.rda')
 
 
