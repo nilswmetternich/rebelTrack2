@@ -33,6 +33,37 @@ ged_merge_sp_grid <- ged_merge_sp_grid %>%
 			days_l10 = lag(days, n=10, order_by = date_start),
 			days_l11 = lag(days, n=11, order_by = date_start),
 			days_l12 = lag(days, n=12, order_by = date_start))
+			
+ged_merge_sp_grid <- ged_merge_sp_grid %>%
+	group_by(priogrid_gid) %>%
+		mutate(deaths_a_l1 = lag(deaths_a, n=1, order_by = date_start),
+			deaths_a_l2 = lag(deaths_a, n=2, order_by = date_start),
+			deaths_a_l3 = lag(deaths_a, n=3, order_by = date_start),
+			deaths_a_l4 = lag(deaths_a, n=4, order_by = date_start),
+			deaths_a_l5 = lag(deaths_a, n=5, order_by = date_start),
+			deaths_a_l6 = lag(deaths_a, n=6, order_by = date_start),
+			deaths_a_l7 = lag(deaths_a, n=7, order_by = date_start),
+			deaths_a_l8 = lag(deaths_a, n=8, order_by = date_start),
+			deaths_a_l9 = lag(deaths_a, n=9, order_by = date_start),
+			deaths_a_l10 = lag(deaths_a, n=10, order_by = date_start),
+			deaths_a_l11 = lag(deaths_a, n=11, order_by = date_start),
+			deaths_a_l12 = lag(deaths_a, n=12, order_by = date_start))
+
+ged_merge_sp_grid <- ged_merge_sp_grid %>%
+	group_by(priogrid_gid) %>%
+		mutate(deaths_b_l1 = lag(deaths_b, n=1, order_by = date_start),
+			deaths_b_l2 = lag(deaths_b, n=2, order_by = date_start),
+			deaths_b_l3 = lag(deaths_b, n=3, order_by = date_start),
+			deaths_b_l4 = lag(deaths_b, n=4, order_by = date_start),
+			deaths_b_l5 = lag(deaths_b, n=5, order_by = date_start),
+			deaths_b_l6 = lag(deaths_b, n=6, order_by = date_start),
+			deaths_b_l7 = lag(deaths_b, n=7, order_by = date_start),
+			deaths_b_l8 = lag(deaths_b, n=8, order_by = date_start),
+			deaths_b_l9 = lag(deaths_b, n=9, order_by = date_start),
+			deaths_b_l10 = lag(deaths_b, n=10, order_by = date_start),
+			deaths_b_l11 = lag(deaths_b, n=11, order_by = date_start),
+			deaths_b_l12 = lag(deaths_b, n=12, order_by = date_start))
+
 
 ged_merge_sp_grid <- ged_merge_sp_grid %>%
 	group_by(priogrid_gid) %>%

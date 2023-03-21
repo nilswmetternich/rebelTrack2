@@ -14,6 +14,8 @@ ged_temp <- ged_merge_grid[ged_merge_grid$date_start==time.periods[i],]
   }
 			ged_temp$best.sp <- as.vector(ged_temp$best %*% Mat_temp)
 			ged_temp$days.sp <- as.vector(ged_temp$days %*% Mat_temp)
+			ged_temp$deaths_a.sp <- as.vector(ged_temp$deaths_a %*% Mat_temp)
+			ged_temp$deaths_b.sp <- as.vector(ged_temp$deaths_b %*% Mat_temp)
 			ged_temp$mean.bdist3.sp <- as.vector(ged_temp$mean.bdist3 %*% Mat_temp)
 			ged_temp$mean.capdist.sp <- as.vector(ged_temp$mean.capdist %*% Mat_temp)
 			ged_temp$events.sp <- as.vector(ged_temp$events %*% Mat_temp)
