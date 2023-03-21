@@ -14,6 +14,17 @@ ged_panel_grid <- left_join(ged_panel_grid,ucdp_days_grid)
 ged_panel_grid$days[is.na(ged_panel_grid$days)] <- 0
 
 
+#merge deaths_a
+load('~/Dropbox/elements/coala/rebelCast/ucdp_deaths_a_grid.rda')
+ged_panel_grid <- left_join(ged_panel_grid,ucdp_deaths_a_grid)
+ged_panel_grid$deaths_a[is.na(ged_panel_grid$deaths_a)] <- 0
+
+#merge deaths_b
+load('~/Dropbox/elements/coala/rebelCast/ucdp_deaths_b_grid.rda')
+ged_panel_grid <- left_join(ged_panel_grid,ucdp_deaths_b_grid)
+ged_panel_grid$deaths_b[is.na(ged_panel_grid$deaths_b)] <- 0
+
+
 #merge rebel_distance
 load('~/Dropbox/elements/coala/rebelCast/ucdp_distance_grid.rda')
 ged_panel_grid <- left_join(ged_panel_grid,ucdp_distance_grid)

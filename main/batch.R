@@ -17,6 +17,8 @@ source('~/Documents/git/rebelTrack2/main/ingester.R', chdir = TRUE)
 
 source('~/Documents/git/rebelTrack2/main/rebel_best_ged.R', chdir = TRUE)
 source('~/Documents/git/rebelTrack2/main/rebel_days_ged.R', chdir = TRUE)
+source('~/Documents/git/rebelTrack2/main/rebel_deathsA_ged.R', chdir = TRUE)
+source('~/Documents/git/rebelTrack2/main/rebel_deathsB_ged.R', chdir = TRUE)
 source('~/Documents/git/rebelTrack2/main/rebel_distance_ged.R', chdir = TRUE)
 source('~/Documents/git/rebelTrack2/main/rebel_events_ged.R', chdir = TRUE)
 source('~/Documents/git/rebelTrack2/main/rebel_grids_ged.R', chdir = TRUE)
