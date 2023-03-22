@@ -1,7 +1,7 @@
 #merging information to panel
 
 load('~/Dropbox/elements/coala/rebelCast/ged_panel.rda')
-load('~/Dropbox/elements/coala/rebelCast/GEDEvent_v22_1.RData')
+load('~/Dropbox/elements/coala/rebelCast/GEDEvent_v22_1_temp.RData')
 
 
 ucdp_ged <- GEDEvent_v22_1[,c("side_a_new_id","side_a","side_b_new_id","side_b","date_start","best")]

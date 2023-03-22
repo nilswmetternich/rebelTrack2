@@ -1,7 +1,7 @@
 #merging information to panel
 
 load('~/Dropbox/elements/coala/rebelCast/ged_panel_grid.rda')
-load('~/Dropbox/elements/coala/rebelCast/GEDEvent_v22_1.RData')
+load('~/Dropbox/elements/coala/rebelCast/GEDEvent_v22_1_temp.RData')
 
 
 ucdp_ged <- GEDEvent_v22_1[,c("priogrid_gid","date_start","deaths_a")]

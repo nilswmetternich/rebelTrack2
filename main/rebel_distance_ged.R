@@ -1,7 +1,7 @@
 #merging information to panel
 
 load('~/Dropbox/elements/coala/rebelCast/ged_panel.rda')
-load('~/Dropbox/elements/coala/rebelCast/GEDEvent_v22_1.RData')
+load('~/Dropbox/elements/coala/rebelCast/GEDEvent_v22_1_temp.RData')
 prio.grid <- read.csv("~/Dropbox/elements/coala/rebelCast/PRIO-GRID Yearly Variables for 2014-2014 - 2023-02-27.csv")
 
 #for(i in 2015:2023){

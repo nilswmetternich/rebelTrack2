@@ -2,7 +2,7 @@
 #pulls data from GED and creates monthly dataset
 
 
-load('~/Dropbox/elements/coala/rebelCast/GEDEvent_v22_1.RData')
+load('~/Dropbox/elements/coala/rebelCast/GEDEvent_v22_1_temp.RData')
 load('~/Dropbox/elements/coala/rebelCast/ucdp-dyadic-221.RData')
 
 #Actor data frame
