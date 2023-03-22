@@ -13,6 +13,8 @@ library(igraph)
 library(nnet)
 library(VGAM)
 
+source('~/Documents/git/rebelTrack2/main/actors.R', chdir = TRUE)
+
 source('~/Documents/git/rebelTrack2/main/ingester.R', chdir = TRUE)
 
 source('~/Documents/git/rebelTrack2/main/rebel_best_ged.R', chdir = TRUE)
