@@ -155,6 +155,36 @@ ged_merge_sp <- ged_merge_sp %>%
 			days.sp_l10 = lag(days.sp, n=10, order_by = date_start),
 			days.sp_l11 = lag(days.sp, n=11, order_by = date_start),
 			days.sp_l12 = lag(days.sp, n=12, order_by = date_start))
+			
+ged_merge_sp <- ged_merge_sp %>%
+	group_by(side_id) %>%
+		mutate(deaths_a.sp_l1 = lag(deaths_a.sp, n=1, order_by = date_start),
+			deaths_a.sp_l2 = lag(deaths_a.sp, n=2, order_by = date_start),
+			deaths_a.sp_l3 = lag(deaths_a.sp, n=3, order_by = date_start),
+			deaths_a.sp_l4 = lag(deaths_a.sp, n=4, order_by = date_start),
+			deaths_a.sp_l5 = lag(deaths_a.sp, n=5, order_by = date_start),
+			deaths_a.sp_l6 = lag(deaths_a.sp, n=6, order_by = date_start),
+			deaths_a.sp_l7 = lag(deaths_a.sp, n=7, order_by = date_start),
+			deaths_a.sp_l8 = lag(deaths_a.sp, n=8, order_by = date_start),
+			deaths_a.sp_l9 = lag(deaths_a.sp, n=9, order_by = date_start),
+			deaths_a.sp_l10 = lag(deaths_a.sp, n=10, order_by = date_start),
+			deaths_a.sp_l11 = lag(deaths_a.sp, n=11, order_by = date_start),
+			deaths_a.sp_l12 = lag(deaths_a.sp, n=12, order_by = date_start))
+			
+ged_merge_sp <- ged_merge_sp %>%
+	group_by(side_id) %>%
+		mutate(deaths_b.sp_l1 = lag(deaths_b.sp, n=1, order_by = date_start),
+			deaths_b.sp_l2 = lag(deaths_b.sp, n=2, order_by = date_start),
+			deaths_b.sp_l3 = lag(deaths_b.sp, n=3, order_by = date_start),
+			deaths_b.sp_l4 = lag(deaths_b.sp, n=4, order_by = date_start),
+			deaths_b.sp_l5 = lag(deaths_b.sp, n=5, order_by = date_start),
+			deaths_b.sp_l6 = lag(deaths_b.sp, n=6, order_by = date_start),
+			deaths_b.sp_l7 = lag(deaths_b.sp, n=7, order_by = date_start),
+			deaths_b.sp_l8 = lag(deaths_b.sp, n=8, order_by = date_start),
+			deaths_b.sp_l9 = lag(deaths_b.sp, n=9, order_by = date_start),
+			deaths_b.sp_l10 = lag(deaths_b.sp, n=10, order_by = date_start),
+			deaths_b.sp_l11 = lag(deaths_b.sp, n=11, order_by = date_start),
+			deaths_b.sp_l12 = lag(deaths_b.sp, n=12, order_by = date_start))
 
 ged_merge_sp <- ged_merge_sp %>%
 	group_by(side_id) %>%
