@@ -1,0 +1,34 @@
+#merging information to panel
+
+load('~/Dropbox/elements/coala/rebelCast/GEDEvent_v22_1_temp.RData')
+prio.grid <- read.csv("~/Dropbox/elements/coala/rebelCast/PRIO-GRID Yearly Variables for 2014-2014 - 2023-02-27.csv")
+
+#for(i in 2015:2023){
+#	prio.grid.n <- prio.grid[prio.grid$year==2014,]
+#	prio.grid.n$year <- i
+#	prio.grid <- dplyr::bind_rows(prio.grid,prio.grid.n)
+#}
+
+
+prio.grid <- prio.grid %>%
+				group_by(gid) %>%
+					summarise(mean.bdist3=mean(bdist3,na.rm=FALSE), mean.capdist=mean(capdist,na.rm=TRUE))
+
+
+
+ucdp_ged <- GEDEvent_v22_1[,c("date_start","year","priogrid_gid")]
+	ucdp_ged$date_start <- as.Date(substr(ucdp_ged$date_start,1,10))
+		ucdp_ged$date_start <- lubridate::floor_date(ucdp_ged$date_start,unit = "halfyear")	
+
+ucdp_ged <- left_join(ucdp_ged,prio.grid,by=c("priogrid_gid"="gid"))
+
+ucdp_distance_grid <- ucdp_ged %>%
+						group_by(priogrid_gid,date_start) %>%
+							summarise(mean.bdist3=mean(mean.bdist3,na.rm=FALSE),mean.capdist=mean(mean.capdist,na.rm=FALSE))
+
+save(ucdp_distance_grid, file='~/Dropbox/elements/coala/rebelCast/ucdp_distance_grid_halfyear.rda')
+
+
+
+
+

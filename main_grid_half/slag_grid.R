@@ -1,0 +1,44 @@
+load('~/Dropbox/elements/coala/rebelCast/ged_merge_grid_halfyear.rda')
+load('~/Dropbox/elements/coala/rebelCast/Mat_v1_grid.rda')
+
+
+time.periods <- unique(ged_merge_grid$date_start)
+
+
+for(i in 1:length(time.periods)){
+ged_temp <- ged_merge_grid[ged_merge_grid$date_start==time.periods[i],]
+	id_temp <- as.character(ged_temp$priogrid_gid)
+		Mat_temp <- Mat_grid[id_temp,id_temp]
+			  if (sum(as.numeric(id_temp)-as.numeric(colnames(Mat_temp))) != 0) {
+    stop("vector and matrix not in correct order")
+  }
+			ged_temp$best.sp <- as.vector(ged_temp$best %*% Mat_temp)
+			ged_temp$days.sp <- as.vector(ged_temp$days %*% Mat_temp)
+			ged_temp$deaths_a.sp <- as.vector(ged_temp$deaths_a %*% Mat_temp)
+			ged_temp$deaths_b.sp <- as.vector(ged_temp$deaths_b %*% Mat_temp)
+			ged_temp$mean.bdist3.sp <- as.vector(ged_temp$mean.bdist3 %*% Mat_temp)
+			ged_temp$mean.capdist.sp <- as.vector(ged_temp$mean.capdist %*% Mat_temp)
+			ged_temp$events.sp <- as.vector(ged_temp$events %*% Mat_temp)
+			ged_temp$actors.sp <- as.vector(ged_temp$actors %*% Mat_temp)
+			ged_temp$transnational_ratio.sp <- as.vector(ged_temp$transnational_ratio %*% Mat_temp)
+			
+	
+			
+			ged_temp <- ged_temp[,which(names(ged_temp) %in% c("priogrid_gid","date_start",grep(".sp",names(ged_temp),value=TRUE)))]
+
+
+			if(i==1){
+				ged_spatial <- ged_temp
+			}
+			
+			if(i>1){
+				ged_spatial <- dplyr::bind_rows(ged_spatial,ged_temp)
+			}
+			print(time.periods[i])
+			}
+			
+dim(ged_spatial)==dim(ged_merge_grid)
+
+ged_merge_sp_grid <- left_join(ged_merge_grid,ged_spatial)
+
+save(ged_merge_sp_grid,file='~/Dropbox/elements/coala/rebelCast/ged_merge_sp_grid_halfyear.rda')
