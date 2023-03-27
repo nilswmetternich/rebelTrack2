@@ -64,7 +64,7 @@ length(unique(ucdp_ged$side_id))==dim(ucdp_ged)[1]
 
 ged_panel <- ucdp_ged %>%
 				group_by(side_id) %>% 
-do(data.frame(date_start = seq(from = .$min.date, to = .$max.date, by = "halfyear"))) 
+do(data.frame(date_start = seq(from = .$min.date, to = .$max.date, by = "6 months"))) 
 
 save(ged_panel,file='~/Dropbox/elements/coala/rebelCast/ged_panel_halfyear.rda')
       

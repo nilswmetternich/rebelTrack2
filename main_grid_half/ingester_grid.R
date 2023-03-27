@@ -32,7 +32,7 @@ length(unique(ucdp_ged$priogrid_gid))==dim(ucdp_ged)[1]
 
 ged_panel_grid <- ucdp_ged %>%
 				group_by(priogrid_gid) %>% 
-do(data.frame(date_start = seq(from = .$min.date, to = .$max.date, by = "halfyear"))) 
+do(data.frame(date_start = seq(from = .$min.date, to = .$max.date, by = "6 months"))) 
 
 save(ged_panel_grid,file='~/Dropbox/elements/coala/rebelCast/ged_panel_grid_halfyear.rda')
       
