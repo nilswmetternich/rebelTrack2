@@ -112,20 +112,33 @@ ged_merge_sp_grid <- ged_merge_sp_grid %>%
 			
 ged_merge_sp_grid <- ged_merge_sp_grid %>%
 	group_by(priogrid_gid) %>%
-		mutate(grids_l1 = lag(grids, n=1, order_by = date_start),
-			grids_l2 = lag(grids, n=2, order_by = date_start),
-			grids_l3 = lag(grids, n=3, order_by = date_start),
-			grids_l4 = lag(grids, n=4, order_by = date_start),
-			grids_l5 = lag(grids, n=5, order_by = date_start),
-			grids_l6 = lag(grids, n=6, order_by = date_start),
-			grids_l7 = lag(grids, n=7, order_by = date_start),
-			grids_l8 = lag(grids, n=8, order_by = date_start),
-			grids_l9 = lag(grids, n=9, order_by = date_start),
-			grids_l10 = lag(grids, n=10, order_by = date_start),
-			grids_l11 = lag(grids, n=11, order_by = date_start),
-			grids_l12 = lag(grids, n=12, order_by = date_start))
+		mutate(actors_l1 = lag(actors, n=1, order_by = date_start),
+			actors_l2 = lag(actors, n=2, order_by = date_start),
+			actors_l3 = lag(actors, n=3, order_by = date_start),
+			actors_l4 = lag(actors, n=4, order_by = date_start),
+			actors_l5 = lag(actors, n=5, order_by = date_start),
+			actors_l6 = lag(actors, n=6, order_by = date_start),
+			actors_l7 = lag(actors, n=7, order_by = date_start),
+			actors_l8 = lag(actors, n=8, order_by = date_start),
+			actors_l9 = lag(actors, n=9, order_by = date_start),
+			actors_l10 = lag(actors, n=10, order_by = date_start),
+			actors_l11 = lag(actors, n=11, order_by = date_start),
+			actors_l12 = lag(actors, n=12, order_by = date_start))
 			
-			
+ged_merge_sp_grid <- ged_merge_sp_grid %>%
+	group_by(priogrid_gid) %>%
+		mutate(transnational_ratio_l1 = lag(transnational_ratio, n=1, order_by = date_start),
+			transnational_ratio_l2 = lag(transnational_ratio, n=2, order_by = date_start),
+			transnational_ratio_l3 = lag(transnational_ratio, n=3, order_by = date_start),
+			transnational_ratio_l4 = lag(transnational_ratio, n=4, order_by = date_start),
+			transnational_ratio_l5 = lag(transnational_ratio, n=5, order_by = date_start),
+			transnational_ratio_l6 = lag(transnational_ratio, n=6, order_by = date_start),
+			transnational_ratio_l7 = lag(transnational_ratio, n=7, order_by = date_start),
+			transnational_ratio_l8 = lag(transnational_ratio, n=8, order_by = date_start),
+			transnational_ratio_l9 = lag(transnational_ratio, n=9, order_by = date_start),
+			transnational_ratio_l10 = lag(transnational_ratio, n=10, order_by = date_start),
+			transnational_ratio_l11 = lag(transnational_ratio, n=11, order_by = date_start),
+			transnational_ratio_l12 = lag(transnational_ratio, n=12, order_by = date_start))		
 
 ged_merge_sp_grid <- ged_merge_sp_grid %>%
 	group_by(priogrid_gid) %>%
@@ -246,6 +259,22 @@ ged_merge_sp_grid <- ged_merge_sp_grid %>%
 			actors.sp_l10 = lag(actors.sp, n=10, order_by = date_start),
 			actors.sp_l11 = lag(actors.sp, n=11, order_by = date_start),
 			actors.sp_l12 = lag(actors.sp, n=12, order_by = date_start))
+
+ged_merge_sp_grid <- ged_merge_sp_grid %>%
+	group_by(priogrid_gid) %>%
+		mutate(transnational_ratio.sp_l1 = lag(transnational_ratio.sp, n=1, order_by = date_start),
+			transnational_ratio.sp_l2 = lag(transnational_ratio.sp, n=2, order_by = date_start),
+			transnational_ratio.sp_l3 = lag(transnational_ratio.sp, n=3, order_by = date_start),
+			transnational_ratio.sp_l4 = lag(transnational_ratio.sp, n=4, order_by = date_start),
+			transnational_ratio.sp_l5 = lag(transnational_ratio.sp, n=5, order_by = date_start),
+			transnational_ratio.sp_l6 = lag(transnational_ratio.sp, n=6, order_by = date_start),
+			transnational_ratio.sp_l7 = lag(transnational_ratio.sp, n=7, order_by = date_start),
+			transnational_ratio.sp_l8 = lag(transnational_ratio.sp, n=8, order_by = date_start),
+			transnational_ratio.sp_l9 = lag(transnational_ratio.sp, n=9, order_by = date_start),
+			transnational_ratio.sp_l10 = lag(transnational_ratio.sp, n=10, order_by = date_start),
+			transnational_ratio.sp_l11 = lag(transnational_ratio.sp, n=11, order_by = date_start),
+			transnational_ratio.sp_l12 = lag(transnational_ratio.sp, n=12, order_by = date_start))
+
 
 ged_final_grid <- ged_merge_sp_grid
 save(ged_final_grid,file='~/Dropbox/elements/coala/rebelCast/ged_final_grid_halfyear.rda')

@@ -124,7 +124,20 @@ ged_merge_sp <- ged_merge_sp %>%
 			grids_l11 = lag(grids, n=11, order_by = date_start),
 			grids_l12 = lag(grids, n=12, order_by = date_start))
 			
-			
+ged_merge_sp <- ged_merge_sp %>%
+	group_by(side_id) %>%
+		mutate(transnational_ratio_l1 = lag(transnational_ratio, n=1, order_by = date_start),
+			transnational_ratio_l2 = lag(transnational_ratio, n=2, order_by = date_start),
+			transnational_ratio_l3 = lag(transnational_ratio, n=3, order_by = date_start),
+			transnational_ratio_l4 = lag(transnational_ratio, n=4, order_by = date_start),
+			transnational_ratio_l5 = lag(transnational_ratio, n=5, order_by = date_start),
+			transnational_ratio_l6 = lag(transnational_ratio, n=6, order_by = date_start),
+			transnational_ratio_l7 = lag(transnational_ratio, n=7, order_by = date_start),
+			transnational_ratio_l8 = lag(transnational_ratio, n=8, order_by = date_start),
+			transnational_ratio_l9 = lag(transnational_ratio, n=9, order_by = date_start),
+			transnational_ratio_l10 = lag(transnational_ratio, n=10, order_by = date_start),
+			transnational_ratio_l11 = lag(transnational_ratio, n=11, order_by = date_start),
+			transnational_ratio_l12 = lag(transnational_ratio, n=12, order_by = date_start))		
 
 ged_merge_sp <- ged_merge_sp %>%
 	group_by(side_id) %>%
@@ -245,6 +258,23 @@ ged_merge_sp <- ged_merge_sp %>%
 			grids.sp_l10 = lag(grids.sp, n=10, order_by = date_start),
 			grids.sp_l11 = lag(grids.sp, n=11, order_by = date_start),
 			grids.sp_l12 = lag(grids.sp, n=12, order_by = date_start))
+
+
+ged_merge_sp <- ged_merge_sp %>%
+	group_by(side_id) %>%
+		mutate(transnational_ratio.sp_l1 = lag(transnational_ratio.sp, n=1, order_by = date_start),
+			transnational_ratio.sp_l2 = lag(transnational_ratio.sp, n=2, order_by = date_start),
+			transnational_ratio.sp_l3 = lag(transnational_ratio.sp, n=3, order_by = date_start),
+			transnational_ratio.sp_l4 = lag(transnational_ratio.sp, n=4, order_by = date_start),
+			transnational_ratio.sp_l5 = lag(transnational_ratio.sp, n=5, order_by = date_start),
+			transnational_ratio.sp_l6 = lag(transnational_ratio.sp, n=6, order_by = date_start),
+			transnational_ratio.sp_l7 = lag(transnational_ratio.sp, n=7, order_by = date_start),
+			transnational_ratio.sp_l8 = lag(transnational_ratio.sp, n=8, order_by = date_start),
+			transnational_ratio.sp_l9 = lag(transnational_ratio.sp, n=9, order_by = date_start),
+			transnational_ratio.sp_l10 = lag(transnational_ratio.sp, n=10, order_by = date_start),
+			transnational_ratio.sp_l11 = lag(transnational_ratio.sp, n=11, order_by = date_start),
+			transnational_ratio.sp_l12 = lag(transnational_ratio.sp, n=12, order_by = date_start))
+
 
 ged_final <- ged_merge_sp
 save(ged_final,file='~/Dropbox/elements/coala/rebelCast/ged_final.rda')
