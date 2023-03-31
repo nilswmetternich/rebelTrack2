@@ -13,7 +13,7 @@ prio.grid <- read.csv("~/Dropbox/elements/coala/rebelCast/PRIO-GRID Yearly Varia
 
 prio.grid <- prio.grid %>%
 				group_by(gid) %>%
-					summarise(mean.bdist3=mean(bdist3,na.rm=FALSE), mean.capdist=mean(capdist,na.rm=TRUE))
+					summarise(mean.bdist3=mean(bdist3,na.rm=TRUE), mean.capdist=mean(capdist,na.rm=TRUE))
 
 
 
@@ -31,9 +31,26 @@ ucdp_ged <- dplyr::bind_rows(ucdp_ged.a,ucdp_ged.b)
 
 ucdp_ged <- left_join(ucdp_ged,prio.grid,by=c("priogrid_gid"="gid"))
 
+missing.values.1 <- which(is.na(ucdp_ged$mean.bdist3))
+missing.values.2 <- which(is.na(ucdp_ged$mean.capdist))
+
+missing.values.1==missing.values.2
+
+for(jj in 1:length(missing.values.1)){
+grid.na <- ucdp_ged$priogrid_gid[missing.values.1[jj]]
+	grid.fill <- c(grid.na-1,grid.na+1,grid.na-2,grid.na+2,grid.na-3,grid.na+3,grid.na-720,grid.na+720,grid.na-1440,grid.na+1440,grid.na-2160,grid.na+2160)
+	 ucdp_ged$mean.bdist3[missing.values.1[jj]] <- mean(ucdp_ged$mean.bdist3[which(ucdp_ged$priogrid_gid %in% grid.fill)],na.rm=TRUE)
+	 	ucdp_ged$mean.capdist[missing.values.1[jj]] <- mean(ucdp_ged$mean.bdist3[which(ucdp_ged$priogrid_gid %in% grid.fill)],na.rm=TRUE)
+}
+
+
 ucdp_distance <- ucdp_ged %>%
 						group_by(side_id,date_start) %>%
-							summarise(mean.bdist3=mean(mean.bdist3,na.rm=FALSE),mean.capdist=mean(mean.capdist,na.rm=FALSE))
+							summarise(mean.bdist3=mean(mean.bdist3,na.rm=TRUE),mean.capdist=mean(mean.capdist,na.rm=TRUE))
+							
+							
+				
+							
 
 save(ucdp_distance, file='~/Dropbox/elements/coala/rebelCast/ucdp_distance_halfyear.rda')
 
