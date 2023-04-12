@@ -12,6 +12,7 @@ library(statnet)
 library(igraph)
 library(nnet)
 library(VGAM)
+library(readxl)
 
 source('~/Documents/git/rebelTrack2/main_half/actors.R', chdir = TRUE)
 

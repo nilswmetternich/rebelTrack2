@@ -2,6 +2,22 @@ load('~/Dropbox/elements/coala/rebelCast/ged_merge.rda')
 load('~/Dropbox/elements/coala/rebelCast/Mat_v1.rda')
 
 
+
+
+
+ucdp_actor <- read_excel("~/Dropbox/elements/coala/rebelCast/ucdp-actor-221.xlsx")
+	ucdp_actor <- ucdp_actor[,c("ActorId","Org")]
+
+state_actors <- ucdp_actor$ActorId[ucdp_actor$Org==4]
+nonstate_actors <- ucdp_actor$ActorId[ucdp_actor$Org!=4]
+
+ged_merge <- ged_merge[which(ged_merge$side_id %in% nonstate_actors),]
+
+
+
+
+
+
 time.periods <- unique(ged_merge$date_start)
 
 
