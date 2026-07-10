@@ -11,8 +11,8 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
-URL: https://github.com/nilswmetternich/rebeltrack
-BugReports: https://github.com/nilswmetternich/rebeltrack/issues
+URL: https://github.com/nilswmetternich/rebelTrack2
+BugReports: https://github.com/nilswmetternich/rebelTrack2/issues
 Imports: 
     rlang,
     magrittr,

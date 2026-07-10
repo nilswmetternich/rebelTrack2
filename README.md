@@ -1,7 +1,5 @@
 # rebeltrack
 
-[![Travis-CI Build Status](https://travis-ci.org/nilswmetternich/rebeltrack.svg?branch=master)](https://travis-ci.org/nilswmetternich/rebeltrack)
-
 ## Getting Started
 
 ### Install `rebeltrack`
@@ -10,7 +8,7 @@
 1. Install the package (replace XXXXXXXX with the *Personal Access Token*)
 
 ```
-devtools::install_github("nilswmetternich/rebelTrack", auth_token="XXXXXXXX")
+devtools::install_github("nilswmetternich/rebelTrack2", auth_token="XXXXXXXX")
 ```
 
 ### Load `rebeltrack`
