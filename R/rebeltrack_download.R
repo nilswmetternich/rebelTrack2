@@ -12,14 +12,25 @@ rebeltrack_download <- function() {
   config <- rebeltrack_config()
 
   for (i in seq_along(config$datasets)) {
+    source_name <- names(config$datasets)[i]
+
+    # PRIO-GRID is handled separately, see rebeltrack_download_prio_grid()
+    # (in rebeltrack_prio_grid.R) and docs/DATA_SOURCES.md: it's no longer a
+    # simple URL fetch, so any leftover "prio" entry in config.yml is
+    # skipped here rather than run through the generic downloader.
+    if (source_name == "prio")
+      next
+
     dataset <- config$datasets[[i]]
 
     for (j in seq_along(dataset)) {
-      name <- list(names(config$datasets)[i], names(dataset)[j])
+      name <- list(source_name, names(dataset)[j])
       dest <- file.path(config$path, do.call(file.path, name))
       rebeltrack_download_dataset(paste(name, collapse="/"), dataset[[j]], dest)
     }
   }
+
+  rebeltrack_download_prio_grid(config)
 }
 
 # rebeltrack_download_dataset - download a single dataset

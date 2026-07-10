@@ -5,7 +5,8 @@
 #' \link{rebeltrack_dataframe}.
 #'
 #' @param x A \code{RebelTrackDataFrame} object
-#' @param side One of: {SIDE_A, SIDE_B} or {'A', 'B'} or {'a', 'b'} or {1, 2}
+#' @param side One of \code{SIDE_A}/\code{SIDE_B}, \code{"A"}/\code{"B"},
+#'   \code{"a"}/\code{"b"}, or \code{1}/\code{2}
 #' @param var Name of the variable to create
 #' @param fill Default value when no events are observed in the specified period.
 #' @param lag An integer giving the number of positions to lead or lag by.
@@ -23,23 +24,17 @@
 #'
 #' data <- rebeltrack_casualty_count(data, SIDE_A, casualty_count)
 #' }
+#' @include rebeltrack_measure_impl.R
 #' @export
 rebeltrack_casualty_count <- function(x, side, var, fill = 0, lag = 0,
                                       weight = NULL) {
-  group <- x@dataset@events %>%
-    dplyr::mutate_(casualty_count = get_var_by_side("deaths_%s", side)) %>%
-    dplyr::group_by(actor, period_start)
-
-  group_summary <- dplyr::summarize(group, .var = sum(casualty_count))
-
-  data <- x %>%
-    weighted_lag(rlang::quo_name(rlang::enquo(var)),
-                 group,
-                 group_summary,
-                 fill,
-                 lag,
-                 weight)
-
-  .rebeltrack_dataframe(dataset = x@dataset, data = data)
+  .rebeltrack_measure_impl(
+    x, group_col = "actor",
+    var = rlang::quo_name(rlang::enquo(var)), fill = fill, lag = lag, weight = weight,
+    lag_engine = weighted_lag, constructor = .rebeltrack_dataframe,
+    make_group = .simple_group(function(events) dplyr::mutate(
+      events, casualty_count = .data[[get_var_by_side("deaths_%s", side)]])),
+    summarise = function(group) dplyr::summarize(group, .var = sum(casualty_count))
+  )
 }
 

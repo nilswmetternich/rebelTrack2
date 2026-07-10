@@ -45,6 +45,61 @@ get_var_by_side <- function(pattern, side) {
   sprintf(pattern, sides)[side]
 }
 
+#' Count distinct calendar days covered by any event's [date_start, date_end] span
+#'
+#' Used by \code{rebeltrack_days_affected()}/\code{rebeltrack_days_affected_gid()}
+#' to measure the actual duration of days affected by conflict - a UNION of
+#' each event's day-span, not a sum of individual event durations (so
+#' overlapping events aren't double-counted) and not just a count of
+#' distinct event start dates (the previous behaviour - see
+#' docs/STEP2_NOTES.md for why this changed).
+#'
+#' This does NOT clip event spans to period boundaries - an event that
+#' starts near the end of one period and continues into the next has ALL of
+#' its days counted against the period its \code{date_start} falls in, even
+#' the days that chronologically belong to the following period. For a
+#' version that clips to the period the panel was actually built with, see
+#' \code{rebeltrack_count_days_ongoing_in_period()}, used by
+#' \code{rebeltrack_days_ongoing()}/\code{rebeltrack_days_ongoing_gid()}.
+#'
+#' @param date_start,date_end Vectors of event start/end datetimes
+#' @keywords internal
+rebeltrack_count_days_affected <- function(date_start, date_end) {
+  date_start <- as.Date(date_start)
+  date_end <- pmax(as.Date(date_end), date_start) # guard against date_end < date_start
+  spans <- mapply(function(s, e) seq(s, e, by = "day"),
+                  date_start, date_end, SIMPLIFY = FALSE)
+  length(unique(unlist(spans, use.names = FALSE)))
+}
+
+#' Count distinct calendar days covered by any event's span, clipped to a period
+#'
+#' Same union-of-day-spans logic as \code{rebeltrack_count_days_affected()},
+#' but each event's \code{[date_start, date_end]} span is first clipped to
+#' \code{[period_start, period_end]} - so an event that continues past the
+#' end of the period only contributes the days that actually fall within
+#' this period, and the days past the boundary are attributed to whichever
+#' later period they actually fall in instead (since that period's own
+#' events will independently clip against its own bounds when this function
+#' runs for it).
+#'
+#' @param date_start,date_end Vectors of event start/end datetimes
+#' @param period_start,period_end Vectors of this row's period boundaries
+#'   (one value repeated per row is fine - all rows in a group share the
+#'   same period)
+#' @keywords internal
+rebeltrack_count_days_ongoing_in_period <- function(date_start, date_end,
+                                                    period_start, period_end) {
+  s <- pmax(as.Date(date_start), as.Date(period_start))
+  e <- pmin(as.Date(date_end), as.Date(period_end))
+  valid <- s <= e # drop events that don't actually overlap this period at all
+  if (!any(valid))
+    return(0L)
+  spans <- mapply(function(a, b) seq(a, b, by = "day"),
+                  s[valid], e[valid], SIMPLIFY = FALSE)
+  length(unique(unlist(spans, use.names = FALSE)))
+}
+
 #' Calculate lead/lag
 #'
 #' @param x A vector of values
@@ -91,7 +146,6 @@ weight_apply <- function(x, w, n_actors, n_periods) {
   # split the data into T-size vectors and change NAs to 0
   a <- array(var, dim = wdim[-1])
   a[is.na(a)] <- 0
-  print(dim(a))
   # apply the weights
   wx <- as.vector(sapply(seq(n_periods), function(i) {
     t(a[,i]) %*% w[,,i]
@@ -166,7 +220,7 @@ weight_apply_gid <- function(x, w, n_actors, n_periods) {
 #' @keywords internal
 #'
 weighted_lag <- function(x, var, group, group_summary, fill, lag, weight) {
-  group_vars <- attributes(group)$vars
+  group_vars <- dplyr::group_vars(group)
 
   x %>%
     as.data.frame() %>%
@@ -192,7 +246,7 @@ weighted_lag <- function(x, var, group, group_summary, fill, lag, weight) {
 #' @keywords internal
 #'
 weighted_lag_gid <- function(x, var, group, group_summary, fill, lag, weight) {
-  group_vars <- attributes(group)$vars
+  group_vars <- dplyr::group_vars(group)
 
   x %>%
     as.data.frame() %>%

@@ -59,7 +59,8 @@ setMethod("show", .RebelTrackDataFrameGid@className, function(object) {
 #' Create a RebelTrackDataFrameGid grouped by \code{side} and \code{period}.
 #'
 #' @param dataset A RebelTrackDataSet object
-#' @param side One of: {SIDE_A, SIDE_B} or {'A', 'B'} or {'a', 'b'} or {1, 2}
+#' @param side One of \code{SIDE_A}/\code{SIDE_B}, \code{"A"}/\code{"B"},
+#'   \code{"a"}/\code{"b"}, or \code{1}/\code{2}
 #' @param period Any date interval supported by \link{seq.Date} such as
 #' "day(s)", "week(s)", "month(s)", "quarter(s)", or "year(s)", optionally
 #' preceded by an integer, for example "3 months".
@@ -76,43 +77,11 @@ setMethod("show", .RebelTrackDataFrameGid@className, function(object) {
 #'                              period = "month",
 #'                              balanced = TRUE)
 #' }
+#' @include rebeltrack_dataframe_impl.R
 #' @export
 rebeltrack_dataframe_gid <- function(dataset, side, period, balanced = FALSE) {
-
-  events <- dataset@events %>%
-    dplyr::mutate(period_start = lubridate::floor_date(date_start,
-                                                       unit = period)) %>%
-    dplyr::mutate_(actor = get_var_by_side("side_%s_new_id", side))
-
-    data <- events %>%
-
-    dplyr::group_by(priogrid_gid, period_start) %>%
-    dplyr::summarize() %>%
-    tidyr::complete(period_start = seq(min(period_start),
-                                       max(period_start),
-                                       by = period)) %>%
-    dplyr::ungroup() %>%
-    dplyr::mutate(active = TRUE)
-
-  if (balanced) {
-    period_seq <- seq(min(data$period_start),
-                      max(data$period_start),
-                      by = period)
-    data <- data %>%
-      dplyr::group_by(priogrid_gid) %>%
-      tidyr::complete(period_start = period_seq, fill = list(active = FALSE)) %>%
-      dplyr::ungroup()
-  }
-
-  data <- data %>%
-    dplyr::mutate(period_end = period_start +
-                    lubridate::period(period) - lubridate::days(1)) %>%
-    dplyr::select(priogrid_gid, period_start, period_end, active) %>%
-    dplyr::arrange(period_start, priogrid_gid)
-
-  dataset <- rebeltrack_update_dataset(dataset, events = events)
-
-  .rebeltrack_dataframe_gid(dataset = dataset, data = data)
+  .rebeltrack_dataframe_impl(dataset, side, period, balanced,
+                             group_col = "priogrid_gid", constructor = .rebeltrack_dataframe_gid)
 }
 
 

@@ -1,7 +1,7 @@
 context("Test rebeltrack_days_affected")
 
 test_days_affected <- function(side, period) {
-  dataset <- rebeltrack_load_dataset()
+  dataset <- .rebeltrack_test_dataset()
   data <- rebeltrack_dataframe(dataset,
                                side = side,
                                period = period,

@@ -21,26 +21,18 @@
 #'
 #' data <- rebeltrack_casualty_count_gid(data, casualty_count)
 #' }
+#' @include rebeltrack_measure_impl.R
 #' @export
 rebeltrack_casualty_count_gid <- function(x, var, fill = 0, lag = 0,
                                       weight = NULL) {
-
-  group <- x@dataset@events %>%
-    dplyr::mutate(casualty_count = deaths_a + deaths_b) %>%
-    dplyr::group_by(priogrid_gid, period_start)
-  # group by gid, dont think we need the mutate in there
-
-  group_summary <- dplyr::summarize(group, .var = sum(casualty_count))
-  # by default deaths for both sides
-  data <- x %>%
-    weighted_lag_gid(rlang::quo_name(rlang::enquo(var)),
-                 group,
-                 group_summary,
-                 fill,
-                 lag,
-                 weight)
-
-  .rebeltrack_dataframe_gid(dataset = x@dataset, data = data)
+  .rebeltrack_measure_impl(
+    x, group_col = "priogrid_gid",
+    var = rlang::quo_name(rlang::enquo(var)), fill = fill, lag = lag, weight = weight,
+    lag_engine = weighted_lag_gid, constructor = .rebeltrack_dataframe_gid,
+    make_group = .simple_group(function(events) dplyr::mutate(
+      events, casualty_count = deaths_a + deaths_b)),
+    summarise = function(group) dplyr::summarize(group, .var = sum(casualty_count))
+  )
 }
 
 
@@ -67,26 +59,18 @@ rebeltrack_casualty_count_gid <- function(x, var, fill = 0, lag = 0,
 #'
 #' data <- rebeltrack_casualty_count_gid_sideA(data, casualty_count)
 #' }
+#' @include rebeltrack_measure_impl.R
 #' @export
 rebeltrack_casualty_count_gid_sideA <- function(x, var, fill = 0, lag = 0,
                                                 weight = NULL) {
-
-  group <- x@dataset@events %>%
-    dplyr::mutate(casualty_count = deaths_a) %>%
-    dplyr::group_by(priogrid_gid, period_start)
-  # group by gid, dont think we need the mutate in there
-
-  group_summary <- dplyr::summarize(group, .var = sum(casualty_count))
-  # by default deaths for both sides
-  data <- x %>%
-    rebeltrack::weighted_lag_gid(rlang::quo_name(rlang::enquo(var)),
-                                 group,
-                                 group_summary,
-                                 fill,
-                                 lag,
-                                 weight)
-
-  .rebeltrack_dataframe_gid(dataset = x@dataset, data = data)
+  .rebeltrack_measure_impl(
+    x, group_col = "priogrid_gid",
+    var = rlang::quo_name(rlang::enquo(var)), fill = fill, lag = lag, weight = weight,
+    lag_engine = weighted_lag_gid, constructor = .rebeltrack_dataframe_gid,
+    make_group = .simple_group(function(events) dplyr::mutate(
+      events, casualty_count = deaths_a)),
+    summarise = function(group) dplyr::summarize(group, .var = sum(casualty_count))
+  )
 }
 
 #' Calculate Casualties
@@ -112,28 +96,16 @@ rebeltrack_casualty_count_gid_sideA <- function(x, var, fill = 0, lag = 0,
 #'
 #' data <- rebeltrack_casualty_count_gid_sideB(data, casualty_count)
 #' }
+#' @include rebeltrack_measure_impl.R
 #' @export
 rebeltrack_casualty_count_gid_sideB <- function(x, var, fill = 0, lag = 0,
                                                 weight = NULL) {
-
-  group <- x@dataset@events %>%
-    dplyr::mutate(casualty_count = deaths_b) %>%
-    dplyr::group_by(priogrid_gid, period_start)
-  # group by gid, dont think we need the mutate in there
-
-  group_summary <- dplyr::summarize(group, .var = sum(casualty_count))
-  # by default deaths for both sides
-  data <- x %>%
-    weighted_lag_gid(rlang::quo_name(rlang::enquo(var)),
-                     group,
-                     group_summary,
-                     fill,
-                     lag,
-                     weight)
-
-  .rebeltrack_dataframe_gid(dataset = x@dataset, data = data)
+  .rebeltrack_measure_impl(
+    x, group_col = "priogrid_gid",
+    var = rlang::quo_name(rlang::enquo(var)), fill = fill, lag = lag, weight = weight,
+    lag_engine = weighted_lag_gid, constructor = .rebeltrack_dataframe_gid,
+    make_group = .simple_group(function(events) dplyr::mutate(
+      events, casualty_count = deaths_b)),
+    summarise = function(group) dplyr::summarize(group, .var = sum(casualty_count))
+  )
 }
-
-
-
-

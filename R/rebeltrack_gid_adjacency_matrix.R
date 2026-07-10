@@ -1,308 +1,141 @@
-#' return matrix coordinates for monotonic prigrid gid code
-#' @param gid gid number of prio grid cell
-#' @keywords internal
-gid_to_coords <- function(gid){
-  # returns coords from gid in gid format
-  # x, y where south west is 1, 1
-  # complicated by prio not following standard matrix notation
-  gid <- gid - 1
-  y <- gid %/% 720
-  x <- gid %% 720
-  x <- x + 1
-  y <- y + 1
-  return(c(x, y))
-}
+# Vectorized rewrite of rebeltrack_adjacency_matrix_gid(), replacing the
+# original loop/list-column-based implementation. See docs/STEP2_NOTES.md
+# for the full writeup, including the equivalence check against the
+# original that this replaced (dim, dimnames, and all 1064 nonzero entries
+# matched exactly on a real 3-month sample; ~28x faster on that same
+# sample, with the gap expected to grow on larger datasets since the old
+# version allocated a dense gid x gid zero matrix per period).
+#
+# The rewrite exploits PRIO-GRID's row-major gid numbering (sequential from
+# 1 at the south-west corner, west to east, wrapping to the next row after
+# 720 cells) to replace three things that were each a per-row/per-cell R
+# loop in the original:
+#   1. Coordinate round-trip + branch-based boundary wrapping (previously
+#      gid_to_coords()/coords_to_gid()/periodic_boundary_conditions()/
+#      enforce_periodic_boundaries()/lag_neighbours(), plus a
+#      matlab::meshgrid() dependency) -> pure vectorized modular
+#      arithmetic in .gid_neighbor_edges(), computing every row's
+#      neighbours in one shot instead of looping per candidate cell.
+#   2. Per-row list-column set intersection (previously
+#      add_neighbour_column()/summarise_active_grids()/a Vectorize()-based
+#      vectorized_intersect()) -> a semi_join() of the long-format edge
+#      list against the (gid, period_start) pairs actually present in the
+#      data - the same "is this neighbour active in this period" test,
+#      expressed as a join instead of a per-row set operation.
+#   3. Dense per-period matrix allocation + character-string matrix
+#      indexing (previously labelled_matrix()/adj_list_to_mat()/
+#      looped_adj_list_to_mat(), stacked one period at a time via
+#      slam::abind_simple_sparse_array() with awkward i==1/i==2/else
+#      special-casing) -> integer row/col/period indices via match(), fed
+#      directly into one slam::simple_sparse_array() call covering every
+#      period at once.
+#
+# Also dropped in this rewrite: active_cells()/lag_for_active() (dead code
+# - referenced an undefined `data` variable, unreachable from the exported
+# function, never exercised by any test), a leftover `print(i)` debug
+# statement, commented-out `browser()` calls and an old commented-out
+# for-loop implementation, and the `matlab` dependency (its only use was
+# meshgrid(), no longer needed).
 
-
-#' Return monotonic prio grid gid code for pair of matrix coordinates
-#' @param coords - vector of matrix coordinates
-#' @keywords internal
-coords_to_gid <- function(coords){
-  # takes coords and turns into gid
-  return(coords[1] + (coords[2]-1)*720)
-}
-
-#' Enforces periodic boundary conditions from mapping a spherical earth onto a grid.
-#' @param gid - vector of matrix coordinates
-#' @keywords internal
-enforce_periodic_boundaries <- function(gid){
-  coords <- gid_to_coords(gid)
-  coords <- periodic_boundary_conditions(coords)
-  gid <- coords_to_gid(coords)
-  return(gid)
-}
-
-#' Periodic boundary conditions from mapping a spherical earth onto a grid. takes
-#' coordinates and returns a valid coordinate.
-#' @param gid - vector of matrix coordinates
-#' @keywords internal
-periodic_boundary_conditions <- function(coords){
-  # enforces periodic boundary conditions
-  if (coords[1] > 720){
-    coords[1] <- coords[1] - 720
-  }
-  if (coords[1] < 1){
-    coords[1] <- coords[1] + 720
-  }
-  if (coords[2] > 360){
-    coords[2] <- coords[2] - 360
-  }
-  if (coords[2] < 1){
-    coords[2] <- coords[2] + 360
-  }
-  return(coords)
-}
-
-#' Finds neigbours in square grid surrounding prio grid cell.
-#' Lagged square is of side length 2*order +1
-#' Returns list of neighbouring grid cells.
+#' Build a table of relative neighbor offsets for a square lag of the given
+#' order, excluding the origin (no self-loops).
 #'
-#' Note that the grid the lag is calculated for is NOT considered as part of this lag.
-#' I.E there are NO SELF CONNECTIONS IN THE RESULTING ADJACENCY MATRIX
-#' @param gid - prio grid cell to lag surrounding area
-#' @param order - controls the degree to which the spatial lag extends. corresponds to the radius of the lag
+#' @param order Radius of the square neighborhood (order = 1 is the 8
+#'   surrounding cells, matching the fixed default the original spatial lag
+#'   used).
 #' @keywords internal
-lag_neighbours <- function(gid, order){
-  # function to find list of gids included in lag.
-  # at current we remove all negative indices
-  # THIS MEANS THAT OVERLAPS ARE NOT CONSIDERED BY DEFINITION i.e edge cases where adjaceny could be between 1 and 720
-  # are not considered.
-
-  d <- 2 * order + 1
-  # First check if lag will overlap with border
-  horizontal_bounds <- c(-order : order)
-  vertical_bounds <- seq(-order * 720 , 720 * order, by = 720)
-  # for increments of prio grid size.
-  mesh = matlab::meshgrid(horizontal_bounds, vertical_bounds)
-  ans <- c(gid + mesh$x + mesh$y)
-  for (i in 1:length(ans)){
-    ans[i] <- enforce_periodic_boundaries(ans[i])
-    # enforces boundary conditions and corrects - makes periodic.
-  }
-  ans <- ans[ans != gid]
-  return(list(ans))
+.neighbor_offsets <- function(order = 1L) {
+  offsets <- expand.grid(dx = -order:order, dy = -order:order)
+  offsets[!(offsets$dx == 0 & offsets$dy == 0), , drop = FALSE]
 }
 
-#' @keywords internal
-active_cells <- function(x){
-  # fimds the number of grid cell that are currently active - so can use these for adjacency matrix
-  group <- x@dataset@events %>%
-    dplyr::group_by(period_start) # just find if there are events
-  # TODO: we may need to add a mutate here
-  group_summary <- dplyr::summarize(
-    group, .var = dplyr::distinct(priogrid_gid)) # distinct values for a period
-
-  .rebeltrack_dataframe_gid(dataset = x@dataset, data = data)
-
-}
-
-#' @keywords internal
-lag_for_active <- function(x){
-  # lags for active units in dataframe
-  x <- active_cells(x) # finds active units.
-
-}
-
-.vectorized_lag_neighbours <- Vectorize(lag_neighbours)
-
-#' Vectorizes lag_neighbours for use in mutate functions
-#' @param gid - prio grid cell to lag surrounding area
-#' @param order - controls the degree to which the spatial lag extends. corresponds to the radius of the lag
-#' @keywords internal
-vectorized_lag_neighbours <- function(gid, order){
-  # must take direct reference to the column
-  lag <- .vectorized_lag_neighbours(gid, order)
-  # lag <- aperm(lag, c(2,1)) # re arrange the permutation
-  return(lag)
-}
-
-#' Adds column of nearest neigbours as list to dataframe - this differs from R best practice
-#' but is common as an adjacency list in network packages - this is the most efficient representation
-#' considering the structure of the adjacency.
-#' @param x rebeltrack_dataframe_gid
-#' @param order order of the spatial lag to apply
-#' @keywords internal
-add_neighbour_column <- function(x, order = 1){
-  x <- dplyr::mutate(x@data, vals = vectorized_lag_neighbours(priogrid_gid, order))
-}
-
-#' Summarises the starting period and produces list of all priogrid_gid with entry
-#' in the dataset - note that this may produce a denser matrix when balacned = TRUE.
-#' this is handled in weighted_lag_gid
-#' @param x a RebelTrackDataFrameGid object
-#' @keywords internal
-summarise_active_grids <- function(x){
-  out <- x %>% dplyr::group_by(period_start) %>% dplyr::summarize(active_grids = I(list(unique(priogrid_gid))))
-
-}
-
-#' adds active grids for given time period as new column
-#' @keywords internal
-total_active_grids <- function(x){
-  out <- x %>% dplyr::group_by(period_start) %>% dplyr::mutate(active_grids = I(list(unique(priogrid_gid))))
-}
-
-#' @keywords internal
-list_set_intersect <- function(x, y){
-  x <- intersect(x, y)
-}
-
-vectorized_intersect <- Vectorize(list_set_intersect)
-
-#' Finds active neighbours by finding intersect between active neighbours and
-#' possible current neighbours.
-#' @param x a RebelTrackDataFrameGid object
-#' @keywords internal
-active_neighbours <- function(x){
-  active <- add_neighbour_column(x)
-  active_grids <- summarise_active_grids(active)
-  active<- merge(active, active_grids)
-  active <- active %>% dplyr::mutate(grid_intersect = I(vectorized_intersect(active_grids, vals)))
-  .rebeltrack_dataframe_gid(dataset = x@dataset, data = active)
-}
-
-#' @keywords internal
-extract_summary <- function(x){
-  # takes relevant dataframe with neighborus found and computes into a summary of information with date, gid and neighbours
-  group <- x %>% dplyr::group_by(priogrid_gid, period_start) %>% dplyr::summarise(new_var = grid_intersect[1])#filter(dplyr::row_number()==1)
-}
-
-#' @keywords internal
-unique_events <- function(x){
-  # is dataframe of events - gives one event per gid month
-  unique <- x %>% dplyr::group_by(priogrid_gid, period_start) %>%  dplyr::filter(dplyr::row_number() == 1)
-}
-
-
-
-#' @keywords internal
-labelled_matrix <- function(dim = 3, gid_vec){
-  mat <- matrix(0, dim, dim, dimnames = list(gid_vec, gid_vec)) # gid vec to refer to matrix
-  return(mat)
-
-
-}
-
-#' @keywords internal
-adj_list_to_mat <- function(gid, adj, mat){
-  # for (i in adj) {
-  #   mat[sprintf("%i", gid), sprintf("%i", i)] = 1 #over list of adjacent for each gid
-  #   # going for column ordered.
-  # }
-  mat[cbind(sprintf("%i", gid), sprintf("%i", adj))] = 1
-  return(mat)
-}
-
-#' @keywords internal
-looped_adj_list_to_mat <- function(unique_gids, gid, adj){
-  # unique gids should be all possible gids
-  # loops over adj list as bodge
-  mat <- labelled_matrix(length(unique_gids), unique_gids)
-  # for (i in 1:length(gid)){
-  #   mat <- adj_list_to_mat(gid[i], adj[i], mat) # over writes matrix
-  # }
-  # finding where numeric(0)s are in adj
-  mask <- sapply(1:length(adj), function(x) (length(adj[[x]]) > 0))
-  # now remove the numeric(0)s in adj
-  # browser()
-  gid <- gid[mask]
-  adj <- adj[mask]
-  # browser()
-
-  gid <- sapply(gid, as.character)
-  adj <- lapply(adj,as.character)
-  # browser()
-  joined <- lapply(1:length(gid), function(x) cbind(gid[x], adj[[x]]))
-  # browser()
-  joined <- Reduce(rbind, joined)
-
-  # browser()
-  mat[joined] = 1 # adj_list_to_mat replacement - do all in one loop
-  # print(isSymmetric(mat)) # matrix is adjacency matrix so should be symmetric.
-  return(mat)
-}
-
-#' @keywords internal
-adj_wrapper <- function(x, unique_gids){
-  mat <- looped_adj_list_to_mat(unique_gids, x$priogrid_gid, x$grid_intersect)
-  return(slam::as.simple_triplet_matrix(mat))
-}
-
-#' Produces sparse adjacency matrix for priogrid gids
+#' Vectorized computation of spatial neighbor gids.
 #'
-#' Produces adjacency matrix for gid grouped objects. produces spatial lags based
-#' on present and active objects. The provided dataframe should have been given additional
-#' columns with active_neighbours
-#' @param x A RebeltrackDataframeGid object
-#' @return A slam package simple_sparse_array object of adjecency between active priogrids
+#' Exploits PRIO-GRID's row-major gid numbering - sequential from 1 at the
+#' south-west corner, increasing west to east, wrapping to the next row up
+#' after \code{n_cols} cells - to compute wrapped neighbor gids with plain
+#' modular arithmetic instead of a per-cell coordinate round-trip inside an
+#' R-level loop. \code{x \%\% n} already does the "add or subtract one grid
+#' width/height" wraparound a branch-based approach would do by hand, and
+#' generalizes correctly to any order.
+#'
+#' @param gids Vector of source priogrid_gid values (one row of output per
+#'   gid per offset, i.e. \code{length(gids) * n_offsets} rows total).
+#' @param order Radius of the square neighborhood.
+#' @param n_cols Grid width (720 for standard 0.5-degree PRIO-GRID).
+#' @param n_rows Grid height (360 for standard 0.5-degree PRIO-GRID).
+#' @return A data frame with columns \code{priogrid_gid} (source, repeated)
+#'   and \code{neighbor_gid}.
 #' @keywords internal
-full_adj_matrix <- function(x){
- # naive iteration over grids. for loop is reasonably performant
-  un <- unique(dplyr::arrange(x, priogrid_gid)$priogrid_gid)
+.gid_neighbor_edges <- function(gids, order = 1L, n_cols = 720L, n_rows = 360L) {
+  offsets <- .neighbor_offsets(order)
+  n_off <- nrow(offsets)
 
-  dim = length(un)
+  x <- ((gids - 1L) %% n_cols) + 1L
+  y <- ((gids - 1L) %/% n_cols) + 1L
 
-  start_date = unique(dplyr::arrange(x, period_start)$period_start)
+  gid_rep <- rep(gids, each = n_off)
+  x_rep <- rep(x, each = n_off)
+  y_rep <- rep(y, each = n_off)
+  dx <- rep(offsets$dx, times = length(gids))
+  dy <- rep(offsets$dy, times = length(gids))
 
-  i = 1
-  for (date in start_date){
-    print(i)
-    if (i == 1){
-      mat <- adj_wrapper(x[x$period_start == date, ], un)
-      # again this if statement is inneficient
-    } else if (i == 2) {
-      # to deal with adding new dimension
+  new_x <- ((x_rep + dx - 1L) %% n_cols) + 1L
+  new_y <- ((y_rep + dy - 1L) %% n_rows) + 1L
 
-      mat_2 <- adj_wrapper(x[x$period_start == date, ], un)
-
-      mat <- slam::abind_simple_sparse_array(mat, mat_2, MARGIN = -3L)
-
-    } else{
-      mat_2 <- adj_wrapper(x[x$period_start == date, ], un)
-
-      mat <- slam::abind_simple_sparse_array(mat, mat_2, MARGIN = 3L)
-    }
-
-    i = i + 1
-  }
-
-  return(mat)
-}
-.vectorized_adj_list_to_mat <- Vectorize(adj_list_to_mat)
-
-#' @keywords internal
-vectorized_adj_list_to_mat <- function(gid, adj, mat){
-  # trying to replicate pass by reference.
-  return(.vectorized_adj_list_to_mat(gid, adj, mat))
+  data.frame(
+    priogrid_gid = gid_rep,
+    neighbor_gid = new_x + (new_y - 1L) * n_cols
+  )
 }
 
 #' Produces gid adjacency matrix
 #'
+#' Produces adjacency matrix for gid grouped objects: for every (gid,
+#' period) row in \code{x@data}, which of its spatial neighbors are
+#' themselves present in \code{x@data} for that same period. Produces
+#' spatial lags based on present and active objects.
+#'
 #' @param x a RebelTrackDataFrameGid object
-#' @return A slam package simple_sparse_array object of adjecency between active priogrids
+#' @param order Radius of the square spatial lag (order = 1 is the 8
+#'   surrounding cells)
+#' @return A slam package simple_sparse_array object of adjecency between
+#'   active priogrids
+#' @include rebeltrack_gid_dataframe.R
 #' @export
-rebeltrack_adjacency_matrix_gid <- function(x){
-  x <- active_neighbours(x)
-  m <- full_adj_matrix(x@data)
-  rm(x) # just to be explicit with gc (2gb in size)
-  return(m)
-}
+rebeltrack_adjacency_matrix_gid <- function(x, order = 1L) {
+  data <- x@data
+  n_cols <- 720L
+  n_rows <- 360L
 
-#' #' @keywords internal
-#' adj_matrix <- function(x){
-#'   # function to define adjacency matrix for geographic
-#'   # first we construct the empty matrix - can we do csr sparse?
-#'   time_steps <- dplyr::n_distinct(x@dataset@events$period_start)
-#'   n_grids <- dplyr::n_distinct(x@dataset@events$priogrid_gid)
-#'   arr <- array(0, dim = c(n_grids, n_grids, time_steps)) # empty array of zeros.
-#'   # we arrange the gids in ascending order
-#'   # arrange by gids
-#'   arranged <- dplyr::arrange(x@dataset@events, priogrid_gid)
-#'   # unique gids
-#'   gids <- unique(arranged) # arrange unique
-#'   # summarise lists.
-#'   # unique neighbours
-#'   uniq <- unique_events(x@dataset@events)
-#'
-#'
-#' }
+  un <- sort(unique(data$priogrid_gid))
+  periods <- sort(unique(data$period_start))
+  n_gid <- length(un)
+  n_period <- length(periods)
+  gid_index <- stats::setNames(seq_along(un), as.character(un))
+
+  edges <- .gid_neighbor_edges(data$priogrid_gid, order = order,
+                               n_cols = n_cols, n_rows = n_rows)
+  edges$period_start <- rep(data$period_start, each = nrow(edges) / nrow(data))
+
+  # A neighbor only counts if it's actually present in x@data for that same
+  # period - the source row always exists by construction (we're iterating
+  # over x@data's own rows), so only the neighbor side needs filtering.
+  active_presence <- dplyr::distinct(data, priogrid_gid, period_start)
+  edges <- edges %>%
+    dplyr::semi_join(active_presence,
+                     by = c("neighbor_gid" = "priogrid_gid",
+                            "period_start" = "period_start")) %>%
+    dplyr::distinct()
+
+  row_idx <- gid_index[as.character(edges$priogrid_gid)]
+  col_idx <- gid_index[as.character(edges$neighbor_gid)]
+  period_idx <- match(edges$period_start, periods)
+
+  slam::simple_sparse_array(
+    i = cbind(row_idx, col_idx, period_idx),
+    v = rep(1, length(row_idx)),
+    dim = c(n_gid, n_gid, n_period),
+    dimnames = list(as.character(un), as.character(un), NULL)
+  )
+}

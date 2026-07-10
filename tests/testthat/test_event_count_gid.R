@@ -1,7 +1,7 @@
 context("Test rebeltrack_event_count_gid")
 
 test_event_counts_gid <- function(side, period) {
-  dataset <- rebeltrack_load_dataset()
+  dataset <- .rebeltrack_test_dataset()
   data <- rebeltrack_dataframe_gid(dataset,
                                side = side,
                                period = period,

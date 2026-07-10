@@ -18,8 +18,11 @@ rebeltrack_national_ratio_gid(x, var, fill = 0, lag = 0, weight = NULL)
 \item{weight}{A weight matrix to apply.}
 }
 \description{
-Ratio of events in the grids's country and all other countries. Replaces
-rebeltrack_transnational_ratio_gid
+Ratio of events in the grid's country and all other countries.
+}
+\details{
+(rebeltrack_transnational_ratio_gid was an exact duplicate of this
+function and has been removed - use this one. See docs/STEP2_NOTES.md.)
 }
 \examples{
 library(rebeltrack)

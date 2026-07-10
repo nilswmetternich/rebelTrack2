@@ -1,27 +1,31 @@
+# NOTE (2026-07-09): updated for UCDP release 26.1 (GED covers 1989-2025).
+# See docs/DATA_SOURCES.md for what changed vs. the old v18.1 config and
+# what is still unverified because it could not be downloaded/inspected
+# from the sandbox that prepared this update.
 path: ~/.rebeltrack
 datasets:
   ucdp:
     ged:
-      url: http://ucdp.uu.se/downloads/ged/ged181-RData.zip
+      url: https://ucdp.uu.se/downloads/ged/ged261-csv.zip
     dyadic:
-      url: http://ucdp.uu.se/downloads/dyadic/ucdp-dyadic-181.RData.zip
+      url: https://ucdp.uu.se/downloads/dyadic/ucdp-dyadic-261-csv.zip
     termination-conflict:
-      url: http://ucdp.uu.se/downloads/monadterm/ucdp-term-conf-2015.xlsx
+      url: https://ucdp.uu.se/downloads/monadterm/UCDPConflictTerminationDataset_v4_2024_Conflict.csv
     termination-dyadic:
-      url: http://ucdp.uu.se/downloads/monadterm/ucdp-term-dyadic-2015.xlsx
+      url: https://ucdp.uu.se/downloads/monadterm/UCDPConflictTerminationDataset_v4_2024_Dyad.csv
     translation-conflict:
-      url: http://ucdp.uu.se/downloads/actor/translate_conf.csv
+      url: https://ucdp.uu.se/downloads/actor/translate_conf.csv
     translation-dyadic:
-      url: http://ucdp.uu.se/downloads/actor/translate_dyad.csv
+      url: https://ucdp.uu.se/downloads/actor/translate_dyad.csv
     translation-actors:
-      url: http://ucdp.uu.se/downloads/actor/translate_actor.csv
+      url: https://ucdp.uu.se/downloads/actor/translate_actor.csv
     actors:
-      url: http://ucdp.uu.se/downloads/actor/actorlist.csv
-  prio:
-    grid:
-      url: http://grid.prio.org/api/csv/yearlies
-      basename: grid.csv
-      query:
-        startYear: 1989
-        endYear: 2014
-        variables: bdist1,bdist2,capdist
+      url: https://ucdp.uu.se/downloads/actor/ucdp-actor-261-csv.zip
+  # PRIO-GRID is no longer a simple URL fetch, and no longer uses the
+  # priogrid R package either - see docs/DATA_SOURCES.md and
+  # rebeltrack_prio_grid.R. Both border distance (bdist2) and distance to
+  # capital (capdist) are computed directly from the cshapes package's
+  # historical country boundary/capital data + grid cell centroids.
+  # rebeltrack_download() calls rebeltrack_download_prio_grid() for this
+  # unconditionally, so nothing needs to be listed here.
+  prio: {}

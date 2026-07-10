@@ -24,23 +24,16 @@
 #'
 #' data <- rebeltrack_distance_to_capital(data, capital_dist)
 #' }
+#' @include rebeltrack_measure_impl.R
 #' @export
 rebeltrack_distance_to_capital <- function(x, var, fill = NA, lag = 0,
                                            weight = NULL, func = mean, ...) {
-  group <- x@dataset@events %>%
-    dplyr::group_by(actor, period_start)
-
-  group_summary <- dplyr::summarize(
-    group, .var = rebeltrack_summary_stats(capdist, func, na.rm = TRUE, ...))
-
-  data <- x %>%
-    weighted_lag(rlang::quo_name(rlang::enquo(var)),
-                 group,
-                 group_summary,
-                 fill,
-                 lag,
-                 weight)
-
-  .rebeltrack_dataframe(dataset = x@dataset, data = data)
+  .rebeltrack_measure_impl(
+    x, group_col = "actor",
+    var = rlang::quo_name(rlang::enquo(var)), fill = fill, lag = lag, weight = weight,
+    lag_engine = weighted_lag, constructor = .rebeltrack_dataframe,
+    summarise = function(group) dplyr::summarize(
+      group, .var = rebeltrack_summary_stats(capdist, func, na.rm = TRUE, ...))
+  )
 }
 

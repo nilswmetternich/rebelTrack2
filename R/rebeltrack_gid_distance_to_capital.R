@@ -23,23 +23,16 @@
 #'
 #' data <- rebeltrack_distance_to_capital_gid(data, capital_dist)
 #' }
+#' @include rebeltrack_measure_impl.R
 #' @export
 rebeltrack_distance_to_capital_gid <- function(x, var, fill = NA, lag = 0,
                                            weight = NULL, func = mean, ...) {
-  group <- x@dataset@events %>%
-    dplyr::group_by(priogrid_gid, period_start)
-
-  group_summary <- dplyr::summarize(
-    group, .var = rebeltrack_summary_stats(capdist, func, na.rm = TRUE, ...))
-
-  data <- x %>%
-    weighted_lag_gid(rlang::quo_name(rlang::enquo(var)),
-                 group,
-                 group_summary,
-                 fill,
-                 lag,
-                 weight)
-
-  .rebeltrack_dataframe_gid(dataset = x@dataset, data = data)
+  .rebeltrack_measure_impl(
+    x, group_col = "priogrid_gid",
+    var = rlang::quo_name(rlang::enquo(var)), fill = fill, lag = lag, weight = weight,
+    lag_engine = weighted_lag_gid, constructor = .rebeltrack_dataframe_gid,
+    summarise = function(group) dplyr::summarize(
+      group, .var = rebeltrack_summary_stats(capdist, func, na.rm = TRUE, ...))
+  )
 }
 

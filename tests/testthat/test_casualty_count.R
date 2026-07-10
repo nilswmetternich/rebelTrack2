@@ -1,7 +1,7 @@
 context("Test rebeltrack_casualty_count")
 
 test_casualty_counts <- function(side, period) {
-  dataset <- rebeltrack_load_dataset()
+  dataset <- .rebeltrack_test_dataset()
   data <- rebeltrack_dataframe(dataset,
                                side = side,
                                period = period,

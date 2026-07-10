@@ -39,7 +39,7 @@ or UCDP_ONE_SIDED.}
 
 \item{date_end}{Filter by events occcuring on or before \code{date_end}}
 
-\item{prec}{precision based on \code{where_prec} in \link{http://ucdp.uu.se/downloads/ged/ged181.pdf}}
+\item{prec}{precision based on \code{where_prec} in \url{http://ucdp.uu.se/downloads/ged/ged181.pdf}}
 
 \item{download}{Download datasets if necessary}
 }
