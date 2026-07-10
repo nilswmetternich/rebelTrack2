@@ -18,9 +18,14 @@ rebeltrack_actors_present_gid(x, var, fill = 0, lag = 0, weight = NULL)
 \item{weight}{A weight matrix to apply.}
 }
 \description{
-Calculate the number of actors active in each \code{priogrid} and
-\code{period} specified when the \code{RebelTrackDataFrameGid} was created with
-\link{rebeltrack_dataframe_gid}. Equivalent of rebeltrack_grids_affected
+Calculate the number of distinct actors present in each \code{priogrid}
+and \code{period} specified when the \code{RebelTrackDataFrameGid} was
+created with \link{rebeltrack_dataframe_gid}, counting an actor once
+regardless of which side of an event it appears on.
+}
+\details{
+(rebeltrack_actors_active_gid was an exact duplicate of this function and
+has been removed - use this one. See docs/STEP2_NOTES.md.)
 }
 \examples{
 library(rebeltrack)

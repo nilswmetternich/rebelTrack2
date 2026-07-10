@@ -18,9 +18,17 @@ rebeltrack_days_affected(x, var, fill = 0, lag = 0, weight = NULL)
 \item{weight}{A weight matrix to apply.}
 }
 \description{
-Calculate the number of days affected by events grouped by \code{actor} and
-\code{period} specified when the \code{RebelTrackDataFrame} was created with
-\link{rebeltrack_dataframe}.
+Calculate the number of distinct calendar days affected by ongoing
+conflict (the union of every event's \code{date_start}-\code{date_end}
+span, not double-counting overlapping events), grouped by \code{actor}
+and \code{period} specified when the \code{RebelTrackDataFrame} was
+created with \link{rebeltrack_dataframe}.
+}
+\details{
+(Previously this counted only the number of distinct days on which
+events *started*, ignoring how long each event actually lasted - fixed
+2026-07-10, see docs/STEP2_NOTES.md. This does not clip event spans to
+period boundaries; see \code{rebeltrack_count_days_affected()}.)
 }
 \examples{
 library(rebeltrack)

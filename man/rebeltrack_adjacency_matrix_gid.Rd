@@ -4,14 +4,21 @@
 \alias{rebeltrack_adjacency_matrix_gid}
 \title{Produces gid adjacency matrix}
 \usage{
-rebeltrack_adjacency_matrix_gid(x)
+rebeltrack_adjacency_matrix_gid(x, order = 1L)
 }
 \arguments{
 \item{x}{a RebelTrackDataFrameGid object}
+
+\item{order}{Radius of the square spatial lag (order = 1 is the 8
+surrounding cells)}
 }
 \value{
-A slam package simple_sparse_array object of adjecency between active priogrids
+A slam package simple_sparse_array object of adjecency between
+  active priogrids
 }
 \description{
-Produces gid adjacency matrix
+Produces adjacency matrix for gid grouped objects: for every (gid,
+period) row in \code{x@data}, which of its spatial neighbors are
+themselves present in \code{x@data} for that same period. Produces
+spatial lags based on present and active objects.
 }

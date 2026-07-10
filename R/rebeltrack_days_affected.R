@@ -1,8 +1,15 @@
 #' Days Affected by Events
 #'
-#' Calculate the number of days affected by events grouped by \code{actor} and
-#' \code{period} specified when the \code{RebelTrackDataFrame} was created with
-#' \link{rebeltrack_dataframe}.
+#' Calculate the number of distinct calendar days affected by ongoing
+#' conflict (the union of every event's \code{date_start}-\code{date_end}
+#' span, not double-counting overlapping events), grouped by \code{actor}
+#' and \code{period} specified when the \code{RebelTrackDataFrame} was
+#' created with \link{rebeltrack_dataframe}.
+#'
+#' (Previously this counted only the number of distinct days on which
+#' events *started*, ignoring how long each event actually lasted - fixed
+#' 2026-07-10, see docs/STEP2_NOTES.md. This does not clip event spans to
+#' period boundaries; see \code{rebeltrack_count_days_affected()}.)
 #'
 #' @param x A \code{RebelTrackDataFrame} object
 #' @param var Name of the variable to create
@@ -22,25 +29,15 @@
 #'
 #' data <- rebeltrack_days_affected(data, days_affected)
 #' }
+#' @include rebeltrack_measure_impl.R
 #' @export
 rebeltrack_days_affected <- function(x, var, fill = 0, lag = 0, weight = NULL) {
-  group <- x@dataset@events %>%
-    dplyr::group_by(actor, period_start)
-
-  #Does this actually deal with the duration or not??
-  #By summarising with only distinct date starts we do not quantify the duration of the conflict at all
-  #this actually measures the number of distinct days on which conflicts started.
-  #i.e starts on monday tuesday wednesday
-  group_summary <- dplyr::summarize(group, .var = dplyr::n_distinct(date_start))
-
-  data <- x %>%
-    weighted_lag(rlang::quo_name(rlang::enquo(var)),
-                 group,
-                 group_summary,
-                 fill,
-                 lag,
-                 weight)
-
-  .rebeltrack_dataframe(dataset = x@dataset, data = data)
+  .rebeltrack_measure_impl(
+    x, group_col = "actor",
+    var = rlang::quo_name(rlang::enquo(var)), fill = fill, lag = lag, weight = weight,
+    lag_engine = weighted_lag, constructor = .rebeltrack_dataframe,
+    summarise = function(group) dplyr::summarize(
+      group, .var = rebeltrack_count_days_affected(date_start, date_end))
+  )
 }
 

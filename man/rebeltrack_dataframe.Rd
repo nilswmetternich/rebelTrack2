@@ -9,7 +9,8 @@ rebeltrack_dataframe(dataset, side, period, balanced = FALSE)
 \arguments{
 \item{dataset}{A RebelTrackDataSet object}
 
-\item{side}{One of: {SIDE_A, SIDE_B} or {'A', 'B'} or {'a', 'b'} or {1, 2}}
+\item{side}{One of \code{SIDE_A}/\code{SIDE_B}, \code{"A"}/\code{"B"},
+\code{"a"}/\code{"b"}, or \code{1}/\code{2}}
 
 \item{period}{Any date interval supported by \link{seq.Date} such as
 "day(s)", "week(s)", "month(s)", "quarter(s)", or "year(s)", optionally

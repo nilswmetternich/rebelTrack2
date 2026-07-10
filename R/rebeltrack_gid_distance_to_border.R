@@ -23,23 +23,17 @@
 #'
 #' data <- rebeltrack_distance_to_border_gid(data, border_dist)
 #' }
+#' @include rebeltrack_measure_impl.R
 #' @export
 rebeltrack_distance_to_border_gid<- function(x, var, fill = NA, lag = 0,
                                           weight = NULL, func = mean, ...) {
-  group <- x@dataset@events %>%
-    dplyr::group_by(priogrid_gid, period_start)
-
   # TODO: add unique to summary stats, to throw error if all not unique for particular period.
-  group_summary <- dplyr::summarize(
-    group, .var = rebeltrack_summary_stats(bdist2, func, na.rm = TRUE, ...))
-
-  data <- x %>%
-    weighted_lag_gid(rlang::quo_name(rlang::enquo(var)),
-                 group,
-                 group_summary,
-                 fill,
-                 lag,
-                 weight)
-  .rebeltrack_dataframe_gid(dataset = x@dataset, data = data) #got rid of gid
+  .rebeltrack_measure_impl(
+    x, group_col = "priogrid_gid",
+    var = rlang::quo_name(rlang::enquo(var)), fill = fill, lag = lag, weight = weight,
+    lag_engine = weighted_lag_gid, constructor = .rebeltrack_dataframe_gid,
+    summarise = function(group) dplyr::summarize(
+      group, .var = rebeltrack_summary_stats(bdist2, func, na.rm = TRUE, ...))
+  )
 }
 

@@ -21,6 +21,10 @@ rebeltrack_national_count_gid(x, var, fill = 0, lag = 0, weight = NULL)
 Calculate the number of cells active in the country where the \code{priogrid_gid} is active in the
 given \code{period}
 }
+\details{
+(rebeltrack_transnational_count_gid was an exact duplicate of this
+function and has been removed - use this one. See docs/STEP2_NOTES.md.)
+}
 \examples{
 library(rebeltrack)
 

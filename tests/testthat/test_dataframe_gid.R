@@ -1,7 +1,7 @@
 context("Test rebeltrack_dataframe_gid")
 
 test_RebelTrackDataFrame_gid <- function(side, period, period_min, period_max) {
-  dataset <- rebeltrack_load_dataset()
+  dataset <- .rebeltrack_test_dataset()
   data <- rebeltrack_dataframe_gid(dataset,
                                side = side,
                                period = period,

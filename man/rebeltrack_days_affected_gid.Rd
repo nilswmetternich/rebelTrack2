@@ -18,9 +18,18 @@ rebeltrack_days_affected_gid(x, var, fill = 0, lag = 0, weight = NULL)
 \item{weight}{A weight matrix to apply. Must be a gid weight matrix to maintain dimensionality}
 }
 \description{
-Calculate the number of with events starting grouped by \code{priogrid gid} and
-\code{period} specified when the \code{RebelTrackDataFrameGid} was reated with
+Calculate the number of distinct calendar days affected by ongoing
+conflict (the union of every event's \code{date_start}-\code{date_end}
+span, not double-counting overlapping events), grouped by
+\code{priogrid_gid} and \code{period} specified when the
+\code{RebelTrackDataFrameGid} was created with
 \link{rebeltrack_dataframe_gid}.
+}
+\details{
+(Previously this counted only the number of distinct days on which
+events *started*, ignoring how long each event actually lasted - fixed
+2026-07-10, see docs/STEP2_NOTES.md. This does not clip event spans to
+period boundaries; see \code{rebeltrack_count_days_affected()}.)
 }
 \examples{
 library(rebeltrack)

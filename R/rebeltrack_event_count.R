@@ -21,21 +21,14 @@
 #'
 #' data <- rebeltrack_event_count(data, event_count)
 #' }
+#' @include rebeltrack_measure_impl.R
 #' @export
 rebeltrack_event_count <- function(x, var, fill = 0, lag = 0, weight = NULL) {
-  group <- x@dataset@events %>%
-    dplyr::group_by(actor, period_start)
-
-  group_summary <- dplyr::summarize(group, .var = dplyr::n())
-
-  data <- x %>%
-    weighted_lag(rlang::quo_name(rlang::enquo(var)),
-                 group,
-                 group_summary,
-                 fill,
-                 lag,
-                 weight)
-
-  .rebeltrack_dataframe(dataset = x@dataset, data = data)
+  .rebeltrack_measure_impl(
+    x, group_col = "actor",
+    var = rlang::quo_name(rlang::enquo(var)), fill = fill, lag = lag, weight = weight,
+    lag_engine = weighted_lag, constructor = .rebeltrack_dataframe,
+    summarise = function(group) dplyr::summarize(group, .var = dplyr::n())
+  )
 }
 

@@ -9,7 +9,8 @@ rebeltrack_casualty_count(x, side, var, fill = 0, lag = 0, weight = NULL)
 \arguments{
 \item{x}{A \code{RebelTrackDataFrame} object}
 
-\item{side}{One of: {SIDE_A, SIDE_B} or {'A', 'B'} or {'a', 'b'} or {1, 2}}
+\item{side}{One of \code{SIDE_A}/\code{SIDE_B}, \code{"A"}/\code{"B"},
+\code{"a"}/\code{"b"}, or \code{1}/\code{2}}
 
 \item{var}{Name of the variable to create}
 
