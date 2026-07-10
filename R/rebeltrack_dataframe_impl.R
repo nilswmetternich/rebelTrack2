@@ -5,7 +5,7 @@
 # grouping column ("actor" vs "priogrid_gid") and which S4 class/constructor
 # wraps the result. Purely an internal refactor - rebeltrack_dataframe() and
 # rebeltrack_dataframe_gid() keep their exact existing signatures and
-# behaviour. See docs/STEP2_NOTES.md.
+# behaviour. See dev-notes/STEP2_NOTES.md.
 
 #' Shared implementation for the actor/gid panel constructors
 #'

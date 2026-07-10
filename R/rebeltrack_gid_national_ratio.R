@@ -3,7 +3,7 @@
 #' Ratio of events in the grid's country and all other countries.
 #'
 #' (rebeltrack_transnational_ratio_gid was an exact duplicate of this
-#' function and has been removed - use this one. See docs/STEP2_NOTES.md.)
+#' function and has been removed - use this one. See dev-notes/STEP2_NOTES.md.)
 #' @param x A \code{RebelTrackDataFrameGid} object
 #' @param var Name of the variable to create
 #' @param fill Default value when no events are observed in the specified period.

@@ -21,7 +21,7 @@
   distance) entirely from the `cshapes` R package, after two earlier
   attempts (a legacy `grid.prio.org` API capped at 2014, then the `priogrid`
   v3 package, which turned out to be capped at 2019 for the same reason)
-  proved insufficient. See `docs/DATA_SOURCES.md` for the full investigation
+  proved insufficient. See `dev-notes/DATA_SOURCES.md` for the full investigation
   and the three-stage `bdist2` computation redesign (own-boundary distance
   -> temporally-overlapping-union approximation -> per-country local
   neighbourhood intervals using grid-cell-centroid distances), which ended
@@ -91,7 +91,7 @@
   exported function), leftover debug prints/`browser()` calls, and the
   now-unused `matlab` dependency. Verified against the original on a real
   3-month sample: identical dimensions, dimnames, and all 1064 nonzero
-  entries; ~28x faster on that sample alone. See `docs/STEP2_NOTES.md` for
+  entries; ~28x faster on that sample alone. See `dev-notes/STEP2_NOTES.md` for
   the full writeup and equivalence check.
 * Added `tests/testthat/helper-dataset.R`, a session-cached dataset
   fixture (`.rebeltrack_test_dataset()`). Every test file previously called
@@ -100,7 +100,7 @@
   `check()` run re-read and re-joined the full GED/actors/PRIO-GRID data
   from disk 30+ times over. Tests now share one load for the whole suite.
 
-See `docs/STEP2_NOTES.md` for the full file-by-file audit.
+See `dev-notes/STEP2_NOTES.md` for the full file-by-file audit.
 
 # rebeltrack 0.1.1
 

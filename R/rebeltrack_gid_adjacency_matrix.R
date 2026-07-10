@@ -1,5 +1,5 @@
 # Vectorized rewrite of rebeltrack_adjacency_matrix_gid(), replacing the
-# original loop/list-column-based implementation. See docs/STEP2_NOTES.md
+# original loop/list-column-based implementation. See dev-notes/STEP2_NOTES.md
 # for the full writeup, including the equivalence check against the
 # original that this replaced (dim, dimnames, and all 1064 nonzero entries
 # matched exactly on a real 3-month sample; ~28x faster on that same

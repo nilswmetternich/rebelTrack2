@@ -1,5 +1,5 @@
 # Quick follow-up: cshapes_gwcode has a hard cliff to 0 coverage in 2019+
-# (confirmed - see docs/DATA_SOURCES.md). bdist1/bdist2 (distance to nearest
+# (confirmed - see dev-notes/DATA_SOURCES.md). bdist1/bdist2 (distance to nearest
 # land-contiguous / international border) are conceptually also
 # border-geometry-dependent, and might be built from the same CShapes 2.0
 # source (which is only defined through 2019 per its own title/scope). This

@@ -27,7 +27,7 @@ rebeltrack_actor_name <- function(x, var, long = FALSE) {
   # populated for every actor. Falling back to the Orig columns via
   # coalesce() when there's no New value means every actor still gets a
   # name, rather than NA for the (common) case of an actor that never
-  # changed names. See docs/STEP2_NOTES.md.
+  # changed names. See dev-notes/STEP2_NOTES.md.
   short_col <- "NameOrig"
   full_col <- "NameOrigFullEng"
   new_short_col <- "NewName"

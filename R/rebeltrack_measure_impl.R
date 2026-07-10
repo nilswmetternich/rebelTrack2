@@ -10,7 +10,7 @@
 # This is a purely internal refactor - every exported function name and
 # signature is unchanged (rebeltrack_casualty_count(),
 # rebeltrack_casualty_count_gid(), etc. all still exist exactly as before),
-# so nothing that calls them needs to change. See docs/STEP2_NOTES.md.
+# so nothing that calls them needs to change. See dev-notes/STEP2_NOTES.md.
 #
 # weighted_lag()/weighted_lag_gid() themselves are NOT merged here even
 # though they're also very similar, because they differ in a real,

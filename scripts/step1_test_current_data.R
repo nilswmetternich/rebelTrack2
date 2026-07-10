@@ -19,7 +19,7 @@
 # the actor dataset, then computes both border distance (bdist2) and
 # distance-to-capital itself directly from the cshapes package - no priogrid
 # dependency any more (see R/rebeltrack_prio_grid.R and
-# docs/DATA_SOURCES.md for why). This may take a while and use a meaningful
+# dev-notes/DATA_SOURCES.md for why). This may take a while and use a meaningful
 # amount of disk space under ~/.rebeltrack. If you'd rather not re-download,
 # delete or rename ~/.rebeltrack first to make sure this is a clean test of
 # the new config, not a mix of old cached
@@ -103,7 +103,7 @@ if (!is.null(dataset)) {
   # The PRIO-GRID join no longer clamps event years beyond prio's coverage
   # to the latest available year - events from years prio doesn't cover
   # (currently 2020+, since cshapes' actual data caps at 2019 - see
-  # docs/DATA_SOURCES.md) now get a plain NA for bdist2/capdist instead of a
+  # dev-notes/DATA_SOURCES.md) now get a plain NA for bdist2/capdist instead of a
   # silently-substituted older value. So a lower share here than the raw
   # prio/grid table's own coverage is expected and correct, not a bug.
   events_year_max <- max(dataset@events$year, na.rm = TRUE)

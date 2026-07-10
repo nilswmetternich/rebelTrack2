@@ -1,4 +1,4 @@
-# PRIO-GRID access history (see docs/DATA_SOURCES.md for the full story):
+# PRIO-GRID access history (see dev-notes/DATA_SOURCES.md for the full story):
 #   1. Originally a simple CSV API (grid.prio.org), capped at years 1989-2014.
 #   2. Migrated to the priogrid R package (v3, github.com/prio-data/priogrid),
 #      which covers more years but (a) has no distance-to-capital variable at

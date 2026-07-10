@@ -1,5 +1,5 @@
 # Diagnose why ~35% of GED events don't get a matched capdist/bdist value
-# (see docs/DATA_SOURCES.md and the Step 1 conversation for background).
+# (see dev-notes/DATA_SOURCES.md and the Step 1 conversation for background).
 #
 # This does NOT re-download anything - it reuses whatever
 # rebeltrack_download() already cached (GED under ~/.rebeltrack, priogrid's

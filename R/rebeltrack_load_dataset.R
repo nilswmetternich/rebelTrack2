@@ -71,7 +71,7 @@ rebeltrack_load_dataset <- function(type = NULL,
   # border/capital distance values), on the theory that a stale value beats
   # none. By Nils's preference this is now a plain year-to-year join instead:
   # events from years prio doesn't cover (currently, anything after 2019 -
-  # see docs/DATA_SOURCES.md) just get NA for bdist2/capdist rather than a
+  # see dev-notes/DATA_SOURCES.md) just get NA for bdist2/capdist rather than a
   # silently-substituted older value. This is more honest about what's
   # actually known, at the cost of more missingness in recent years.
   events <- ged %>%

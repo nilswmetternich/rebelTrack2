@@ -52,7 +52,7 @@ get_var_by_side <- function(pattern, side) {
 #' each event's day-span, not a sum of individual event durations (so
 #' overlapping events aren't double-counted) and not just a count of
 #' distinct event start dates (the previous behaviour - see
-#' docs/STEP2_NOTES.md for why this changed).
+#' dev-notes/STEP2_NOTES.md for why this changed).
 #'
 #' This does NOT clip event spans to period boundaries - an event that
 #' starts near the end of one period and continues into the next has ALL of

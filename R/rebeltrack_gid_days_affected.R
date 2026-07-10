@@ -9,7 +9,7 @@
 #'
 #' (Previously this counted only the number of distinct days on which
 #' events *started*, ignoring how long each event actually lasted - fixed
-#' 2026-07-10, see docs/STEP2_NOTES.md. This does not clip event spans to
+#' 2026-07-10, see dev-notes/STEP2_NOTES.md. This does not clip event spans to
 #' period boundaries; see \code{rebeltrack_count_days_affected()}.)
 #'
 #' @param x A \code{RebelTrackDataFrameGid} object
