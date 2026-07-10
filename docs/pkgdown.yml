@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   adjacency_matrix: adjacency_matrix.html
   rebeltrack_example: rebeltrack_example.html
-last_built: 2026-07-10T15:37Z
+last_built: 2026-07-10T15:46Z
 urls:
   reference: https://nilswmetternich.github.io/rebelTrack2/reference
   article: https://nilswmetternich.github.io/rebelTrack2/articles
