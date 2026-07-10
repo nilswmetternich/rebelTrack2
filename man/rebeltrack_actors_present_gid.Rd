@@ -25,7 +25,7 @@ regardless of which side of an event it appears on.
 }
 \details{
 (rebeltrack_actors_active_gid was an exact duplicate of this function and
-has been removed - use this one. See docs/STEP2_NOTES.md.)
+has been removed - use this one. See dev-notes/STEP2_NOTES.md.)
 }
 \examples{
 library(rebeltrack)

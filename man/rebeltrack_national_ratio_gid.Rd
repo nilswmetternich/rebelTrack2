@@ -22,7 +22,7 @@ Ratio of events in the grid's country and all other countries.
 }
 \details{
 (rebeltrack_transnational_ratio_gid was an exact duplicate of this
-function and has been removed - use this one. See docs/STEP2_NOTES.md.)
+function and has been removed - use this one. See dev-notes/STEP2_NOTES.md.)
 }
 \examples{
 library(rebeltrack)
