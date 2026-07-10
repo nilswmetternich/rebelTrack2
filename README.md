@@ -4,11 +4,8 @@
 
 ### Install `rebeltrack`
 
-1. Create a *Personal Access Token* at https://github.com/settings/tokens/new
-1. Install the package (replace XXXXXXXX with the *Personal Access Token*)
-
 ```
-devtools::install_github("nilswmetternich/rebelTrack2", auth_token="XXXXXXXX")
+devtools::install_github("nilswmetternich/rebelTrack2")
 ```
 
 ### Load `rebeltrack`
