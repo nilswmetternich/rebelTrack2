@@ -1,5 +1,5 @@
 # NOTE (2026-07-09): updated for UCDP release 26.1 (GED covers 1989-2025).
-# See docs/DATA_SOURCES.md for what changed vs. the old v18.1 config and
+# See dev-notes/DATA_SOURCES.md for what changed vs. the old v18.1 config and
 # what is still unverified because it could not be downloaded/inspected
 # from the sandbox that prepared this update.
 path: ~/.rebeltrack
@@ -22,7 +22,7 @@ datasets:
     actors:
       url: https://ucdp.uu.se/downloads/actor/ucdp-actor-261-csv.zip
   # PRIO-GRID is no longer a simple URL fetch, and no longer uses the
-  # priogrid R package either - see docs/DATA_SOURCES.md and
+  # priogrid R package either - see dev-notes/DATA_SOURCES.md and
   # rebeltrack_prio_grid.R. Both border distance (bdist2) and distance to
   # capital (capdist) are computed directly from the cshapes package's
   # historical country boundary/capital data + grid cell centroids.

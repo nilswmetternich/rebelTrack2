@@ -5,7 +5,7 @@ test_that("GED dimensions are correct", {
   # defaults to prec = 1 (only precision-level-1/exact-location events), which
   # is why this is far fewer than the raw download's 417968 rows. The column
   # count is GED's own 49 plus the 2 PRIO-GRID covariates (bdist2, capdist)
-  # added by the join in rebeltrack_load_dataset(). See docs/DATA_SOURCES.md.
+  # added by the join in rebeltrack_load_dataset(). See dev-notes/DATA_SOURCES.md.
   dataset <- .rebeltrack_test_dataset()
   events <- dataset@events
   expect_equal(nrow(events), 194544)

@@ -15,7 +15,7 @@ rebeltrack_download <- function() {
     source_name <- names(config$datasets)[i]
 
     # PRIO-GRID is handled separately, see rebeltrack_download_prio_grid()
-    # (in rebeltrack_prio_grid.R) and docs/DATA_SOURCES.md: it's no longer a
+    # (in rebeltrack_prio_grid.R) and dev-notes/DATA_SOURCES.md: it's no longer a
     # simple URL fetch, so any leftover "prio" entry in config.yml is
     # skipped here rather than run through the generic downloader.
     if (source_name == "prio")
