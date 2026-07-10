@@ -15,7 +15,7 @@ to measure the actual duration of days affected by conflict - a UNION of
 each event's day-span, not a sum of individual event durations (so
 overlapping events aren't double-counted) and not just a count of
 distinct event start dates (the previous behaviour - see
-docs/STEP2_NOTES.md for why this changed).
+dev-notes/STEP2_NOTES.md for why this changed).
 }
 \details{
 This does NOT clip event spans to period boundaries - an event that

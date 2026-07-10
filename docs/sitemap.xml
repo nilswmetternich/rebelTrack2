@@ -1,186 +1,73 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/index.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/GROUP_BY_CONFLICT.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/GROUP_BY_GOVERNMENT.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/SIDE_A.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/SIDE_B.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/UCDP_CONFLICT_EXTRASYSTEMIC.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/UCDP_CONFLICT_INTERNAL.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/UCDP_CONFLICT_INTERSTATE.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/UCDP_CONFLICT_WITHOUT_INTERVENTION.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/UCDP_CONFLICT_WITH_INTERVENTION.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/UCDP_NON_STATE.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/UCDP_ONE_SIDED.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/UCDP_STATE_BASED.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/active_neighbours.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/add_neighbour_column.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/as.data.frame.RebelTrackDataFrame.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/as.data.frame.RebelTrackDataFrameGid.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/coords_to_gid.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/enforce_periodic_boundaries.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/full_adj_matrix.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/get_var_by_side.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/gid_to_coords.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/lag_neighbours.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/lead_lag.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/new.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/periodic_boundary_conditions.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_actor_name.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_actors_present_gid.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_adjacency_matrix.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_adjacency_matrix_gid.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_casualty_count.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_casualty_count_gid.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_clean_up_gid.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_dataframe.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_dataframe_gid.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_days_affected.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_days_affected_gid.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_distance_to_border.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_distance_to_border_gid.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_distance_to_capital.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_distance_to_capital_gid.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_download.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_event_count.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_event_count_gid.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_grids_affected.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_load_dataset.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_transnational_count.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_transnational_count_gid.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_transnational_ratio.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/rebeltrack_transnational_ratio_gid.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/summarise_active_grids.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/total_active_grids.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/vectorized_lag_neighbours.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/weight_apply.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/weight_apply_gid.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/weighted_lag.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/weighted_lag_gid.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/reference/within.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/articles/adjacency_matrix.html</loc>
-  </url>
-  <url>
-    <loc>https://nilswmetternich.github.io/rebeltrack/articles/rebeltrack_example.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/404.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/LICENSE-text.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/articles/adjacency_matrix.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/articles/index.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/articles/rebeltrack_example.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/authors.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/index.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/news/index.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/GROUP_BY_CONFLICT.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/GROUP_BY_GOVERNMENT.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/SIDE_A.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/SIDE_B.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/UCDP_CONFLICT_EXTRASYSTEMIC.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/UCDP_CONFLICT_INTERNAL.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/UCDP_CONFLICT_INTERSTATE.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/UCDP_CONFLICT_WITHOUT_INTERVENTION.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/UCDP_CONFLICT_WITH_INTERVENTION.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/UCDP_NON_STATE.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/UCDP_ONE_SIDED.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/UCDP_STATE_BASED.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/as.data.frame.RebelTrackDataFrame.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/as.data.frame.RebelTrackDataFrameGid.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/dot-gid_neighbor_edges.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/dot-neighbor_offsets.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/dot-rebeltrack_dataframe_impl.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/dot-rebeltrack_measure_impl.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/dot-simple_group.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/get_var_by_side.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/index.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/lead_lag.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/new.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/pipe.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_actor_name.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_actors_present_gid.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_adjacency_matrix.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_adjacency_matrix_gid.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_casualty_count.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_casualty_count_gid.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_casualty_count_gid_sideA.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_casualty_count_gid_sideB.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_clean_up_gid.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_count_days_affected.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_count_days_ongoing_in_period.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_dataframe.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_dataframe_gid.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_days_affected.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_days_affected_gid.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_days_ongoing.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_days_ongoing_gid.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_distance_to_border.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_distance_to_border_gid.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_distance_to_capital.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_distance_to_capital_gid.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_download.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_download_prio_grid.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_event_count.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_event_count_gid.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_grids_affected.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_haversine_km.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_load_dataset.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_national_count_gid.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_national_ratio_gid.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_pgid_to_lonlat.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_transnational_count.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/rebeltrack_transnational_ratio.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/weight_apply.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/weight_apply_gid.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/weighted_lag.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/weighted_lag_gid.html</loc></url>
+<url><loc>https://nilswmetternich.github.io/rebelTrack2/reference/within.html</loc></url>
 </urlset>
+
