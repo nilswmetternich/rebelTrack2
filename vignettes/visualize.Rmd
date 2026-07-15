@@ -1,0 +1,195 @@
+---
+title: "Visualize"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Visualize}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+```
+
+## Rebel organization activity by country
+
+Pick a country to see the monthly event count for every rebel organization
+active there (UCDP GED state-based conflicts), showing how each
+organization's activity has escalated or de-escalated over time.
+
+```{r build-data}
+library(rebeltrack)
+library(dplyr)
+library(crosstalk)
+library(plotly)
+
+dataset <- rebeltrack_load_dataset(type = UCDP_STATE_BASED)
+
+data <- rebeltrack_dataframe(dataset,
+                             side = SIDE_B,
+                             period = "month",
+                             balanced = TRUE) %>%
+  rebeltrack_event_count(event_count) %>%
+  rebeltrack_actor_name(actor_name)
+
+df <- as.data.frame(data)
+
+# rebeltrack_dataframe()'s panel is grouped by actor only - country isn't
+# carried through, so it's attached separately from the raw events. An actor
+# can be attributed to more than one country (e.g. a group active on both
+# sides of a border); when that happens they'll appear under each relevant
+# country, which is the desired behaviour here.
+actor_countries <- dataset@events %>%
+  dplyr::distinct(side_b_new_id, country) %>%
+  dplyr::rename(actor = side_b_new_id)
+
+df <- df %>%
+  dplyr::inner_join(actor_countries, by = "actor") %>%
+  dplyr::filter(!is.na(country))
+
+# Keep only actor/country pairs with a meaningful amount of activity, so the
+# country dropdown isn't cluttered with one-off or miscoded entries.
+keep <- df %>%
+  dplyr::group_by(actor, country) %>%
+  dplyr::summarize(total_events = sum(event_count, na.rm = TRUE), .groups = "drop") %>%
+  dplyr::filter(total_events >= 5)
+
+df <- df %>%
+  dplyr::semi_join(keep, by = c("actor", "country")) %>%
+  dplyr::arrange(country, actor_name, period_start)
+
+# UCDP's raw text fields (country/actor names) include accented characters
+# that aren't always cleanly UTF-8 encoded in the source data - plotly's JSON
+# serialization errors ("input string 1 is invalid UTF-8") on that. Round-
+# tripping through iconv(from = "UTF-8", to = "UTF-8") validates the input as
+# UTF-8 and drops anything that isn't, which sanitizes it without needing to
+# know the true source encoding.
+fix_utf8 <- function(x) iconv(x, from = "UTF-8", to = "UTF-8", sub = "")
+df$country <- fix_utf8(df$country)
+df$actor_name <- fix_utf8(df$actor_name)
+```
+
+```{r chart}
+shared <- SharedData$new(df, group = "rebeltrack-country")
+
+bscols(
+  widths = c(3, 3, 6),
+  filter_select("country", "Country", shared, ~country),
+  filter_select("actor", "Rebel organization", shared, ~actor_name),
+  plot_ly(shared, x = ~period_start, y = ~event_count, color = ~actor_name,
+          type = "scatter", mode = "lines+markers",
+          hoverinfo = "text",
+          text = ~paste0(actor_name, "<br>", format(period_start, "%b %Y"),
+                         "<br>Events: ", event_count)) %>%
+    layout(xaxis = list(title = ""),
+           yaxis = list(title = "Events per month"),
+           legend = list(orientation = "h"))
+)
+```
+
+```{r cascade-js, results='asis', echo=FALSE}
+# crosstalk's filter_select() widgets only filter the *chart* they're linked
+# to - they don't restrict each other's own dropdown lists (each filter's
+# option list is fixed at render time from the full dataset). To make the
+# "Rebel organization" dropdown only offer orgs present in the selected
+# country, we bypass crosstalk here and drive it with plain selectize.js:
+# listen for changes on the country filter's underlying <select>, and
+# rebuild the actor filter's option list from a country -> actors lookup
+# built from the same df used above.
+country_actors <- df %>%
+  dplyr::distinct(country, actor_name) %>%
+  dplyr::arrange(country, actor_name)
+
+country_actors_json <- jsonlite::toJSON(
+  split(country_actors$actor_name, country_actors$country)
+)
+
+cat(sprintf('
+<script>
+(function() {
+  var countryActors = %s;
+  var allActors = Array.from(new Set([].concat.apply([], Object.values(countryActors)))).sort();
+
+  function getSelectize(divId) {
+    var el = document.querySelector("#" + divId + " select");
+    return (el && el.selectize) ? el.selectize : null;
+  }
+
+  function actorsForCountries(countries) {
+    if (!countries || countries.length === 0) return allActors;
+    var set = new Set();
+    countries.forEach(function(c) {
+      (countryActors[c] || []).forEach(function(a) { set.add(a); });
+    });
+    return Array.from(set).sort();
+  }
+
+  function getPlotlyDiv() {
+    return document.querySelector(".js-plotly-plot");
+  }
+
+  function updateActorOptions(countries) {
+    var actorSelectize = getSelectize("actor");
+    if (!actorSelectize) return;
+    var actors = actorsForCountries(countries);
+    var current = actorSelectize.getValue();
+    actorSelectize.clearOptions();
+    actors.forEach(function(a) { actorSelectize.addOption({value: a, label: a}); });
+    actorSelectize.refreshOptions(false);
+    var stillValid = current.filter(function(v) { return actors.indexOf(v) !== -1; });
+    // silent: the legend refresh is triggered explicitly by the caller below,
+    // so we do not need setValue()\'s own change event to fire here too.
+    actorSelectize.setValue(stillValid, true);
+  }
+
+  // crosstalk empties out a trace\'s data points when it is filtered, but
+  // leaves the (now-empty) trace, and thus its legend entry, in place. This
+  // drives the legend directly off the current country/actor selection so
+  // traces that are not currently shown drop out of the legend entirely.
+  function applyLegendFilter() {
+    var countrySelectize = getSelectize("country");
+    var actorSelectize = getSelectize("actor");
+    var graphDiv = getPlotlyDiv();
+    if (!countrySelectize || !actorSelectize || !graphDiv || !graphDiv.data) return;
+
+    var countries = countrySelectize.getValue();
+    var selectedActors = actorSelectize.getValue();
+    var allowed = selectedActors.length > 0 ? selectedActors : actorsForCountries(countries);
+    var allowedSet = new Set(allowed);
+
+    var visible = graphDiv.data.map(function(trace) {
+      return allowedSet.has(trace.name);
+    });
+
+    Plotly.restyle(graphDiv, { visible: visible });
+  }
+
+  function onCountryChange() {
+    var countrySelectize = getSelectize("country");
+    updateActorOptions(countrySelectize.getValue());
+    applyLegendFilter();
+  }
+
+  function init() {
+    var countrySelectize = getSelectize("country");
+    var actorSelectize = getSelectize("actor");
+    var graphDiv = getPlotlyDiv();
+    if (!countrySelectize || !actorSelectize || !graphDiv || !graphDiv.data || !graphDiv.data.length) {
+      setTimeout(init, 150);
+      return;
+    }
+    updateActorOptions(countrySelectize.getValue());
+    applyLegendFilter();
+    countrySelectize.on("change", onCountryChange);
+    actorSelectize.on("change", applyLegendFilter);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+', country_actors_json))
+```

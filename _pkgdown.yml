@@ -4,3 +4,12 @@ template:
   params:
     bootswatch: cosmo
 
+navbar:
+  structure:
+    left: [visualize, reference, articles, news]
+    right: [search, github]
+  components:
+    visualize:
+      text: Visualize
+      href: articles/visualize.html
+
