@@ -33,7 +33,10 @@ Suggests:
   knitr,
   rmarkdown,
   pkgdown,
-  cshapes
+  cshapes,
+  crosstalk,
+  plotly,
+  jsonlite
 Collate:
     'rebeltrack_actor_name.R'
     'rebeltrack_adjacency_matrix.R'
