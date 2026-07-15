@@ -47,7 +47,7 @@ rebeltrack_adjacency_matrix <- function(x, by = GROUP_BY_CONFLICT) {
     dplyr::group_by(period_start, group_id) %>%
     tidyr::expand(actor, accomplice = actor) %>%
     dplyr::group_by(period_start, actor, accomplice) %>%
-    dplyr::summarize(edges = n()) %>%
+    dplyr::summarize(edges = dplyr::n()) %>%
     tidyr::spread(accomplice, edges, drop=FALSE, fill = 0) %>%
     dplyr::ungroup() %>%
     dplyr::select(-c(period_start, actor))
