@@ -14,6 +14,18 @@
 #' @param date_start Filter by events occcuring on or after \code{date_start}
 #' @param date_end Filter by events occcuring on or before \code{date_end}
 #' @param prec precision based on \code{where_prec} in \url{http://ucdp.uu.se/downloads/ged/ged181.pdf}
+#' @param exclude_interstate UCDP GED's state-based subset
+#' (\code{UCDP_STATE_BASED}) is not exclusively government-vs-rebel: it also
+#' includes interstate (government-vs-government) dyads, e.g. Ethiopia vs.
+#' Eritrea or India vs. Pakistan. Every actor-based feature/model in
+#' rebeltrack and rebelcast assumes \code{side_b} is a rebel/non-state
+#' organization, so by default (\code{TRUE}) state-based events where side B
+#' is itself a government (identified via a non-missing \code{gwnob} - side
+#' B's Gleditsch-Ward state code, only populated when side B is a state) are
+#' dropped. Set to \code{FALSE} to keep interstate dyads in, e.g. to study
+#' interstate war severity specifically. Has no effect on non-state
+#' (\code{UCDP_NON_STATE}) or one-sided (\code{UCDP_ONE_SIDED}) events, which
+#' never have a government side B.
 #' @param download Download datasets if necessary
 #' @examples
 #' library(rebeltrack)
@@ -33,6 +45,7 @@ rebeltrack_load_dataset <- function(type = NULL,
                                     date_start = NULL,
                                     date_end = NULL,
                                     prec = 1,
+                                    exclude_interstate = TRUE,
                                     download = TRUE) {
   config <- rebeltrack_config()
 
@@ -60,7 +73,8 @@ rebeltrack_load_dataset <- function(type = NULL,
     rebeltrack_ged_filter(country_gw3c, .data$gwab %in% !!country_gw3c) %>%
     rebeltrack_ged_filter(country_gw3n, .data$gwno %in% !!country_gw3n) %>%
     rebeltrack_ged_filter(date_start, .data$date_start >= !!date_start) %>%
-    rebeltrack_ged_filter(date_end, .data$date_end <= !!date_end)
+    rebeltrack_ged_filter(date_end, .data$date_end <= !!date_end) %>%
+    rebeltrack_exclude_interstate(exclude_interstate)
 
   actors <- rebeltrack_load_actors(config)
 
@@ -86,6 +100,29 @@ rebeltrack_ged_filter <- function(x, arg, filter) {
   if (is.null(arg))
     return(x)
   return(dplyr::filter(x, !!rlang::enquo(filter)))
+}
+
+# Drop state-based (UCDP_STATE_BASED) events where side B is itself a
+# government - i.e. interstate dyads - identified via a non-missing gwnob
+# (side B's Gleditsch-Ward state code; only populated when side B is a
+# state, per the UCDP GED codebook). Guarded against gwnob being absent
+# (e.g. a future UCDP release renaming/dropping it) so this degrades to a
+# no-op with a warning rather than a cryptic dplyr error.
+rebeltrack_exclude_interstate <- function(ged, exclude_interstate) {
+  if (!isTRUE(exclude_interstate))
+    return(ged)
+
+  if (!("gwnob" %in% names(ged))) {
+    warning("exclude_interstate = TRUE was requested, but no 'gwnob' column ",
+           "was found in the GED data, so interstate (gov-vs-gov) dyads ",
+           "could not be identified and none were excluded. Check the ",
+           "current UCDP GED codebook for the column that reports side B's ",
+           "Gleditsch-Ward state code.")
+    return(ged)
+  }
+
+  dplyr::filter(ged, .data$type_of_violence != UCDP_STATE_BASED |
+                     is.na(.data$gwnob))
 }
 
 # Load latest RDS from the given dataset directory.

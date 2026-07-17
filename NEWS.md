@@ -1,3 +1,30 @@
+# rebeltrack 0.2.1
+
+## Interstate dyad filtering
+
+* Added `exclude_interstate` argument to `rebeltrack_load_dataset()`
+  (default `TRUE`). UCDP GED's state-based subset (`UCDP_STATE_BASED`) is
+  not exclusively government-vs-rebel: it also includes interstate
+  (government-vs-government) dyads, e.g. Ethiopia vs. Eritrea or India vs.
+  Pakistan. Every actor-based feature/model in rebeltrack and rebelcast
+  assumes side B is a rebel/non-state organization - see e.g.
+  `dev-notes/STEP2_NOTES.md`'s note on `rebeltrack_gid_actors_present.R` -
+  so by default, state-based events where side B is itself a government
+  (a non-missing `gwnob`, side B's Gleditsch-Ward state code, only
+  populated when side B is a state) are now dropped. Pass
+  `exclude_interstate = FALSE` to keep interstate dyads in, e.g. to study
+  interstate war severity specifically. Has no effect on non-state or
+  one-sided events, which never have a government side B. **This changes
+  the default actor universe returned by `rebeltrack_load_dataset(type =
+  UCDP_STATE_BASED)`** - anything downstream with hardcoded dyad/row
+  counts (including `rebelcast`'s replication scripts and manuscript
+  numbers) needs to be re-run.
+* `tests/testthat/helper-dataset.R`'s shared fixture now pins
+  `exclude_interstate = FALSE` explicitly, so it continues backing the
+  many existing tests with row/column counts from before this change;
+  `tests/testthat/test_interstate_filter.R` exercises the new default
+  directly.
+
 # rebeltrack 0.2.0
 
 ## Step 1: current UCDP data support
