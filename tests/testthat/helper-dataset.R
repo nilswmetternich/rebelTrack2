@@ -11,11 +11,18 @@
 # once here and having tests call .rebeltrack_test_dataset() instead of
 # rebeltrack_load_dataset() directly cuts that down to one load for the
 # whole suite.
+#
+# exclude_interstate = FALSE here deliberately: this fixture backs many
+# tests with hardcoded row/column counts pinned to the dataset's shape
+# before rebeltrack_load_dataset() gained interstate-dyad filtering. Using
+# the new exclude_interstate = TRUE default here would shift those golden
+# numbers out from under every test that wasn't specifically about this
+# filter. test_interstate_filter.R exercises the new default directly.
 .rebeltrack_test_dataset <- local({
   cached <- NULL
   function() {
     if (is.null(cached)) {
-      cached <<- rebeltrack_load_dataset()
+      cached <<- rebeltrack_load_dataset(exclude_interstate = FALSE)
     }
     cached
   }
